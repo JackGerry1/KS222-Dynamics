@@ -1,0 +1,65 @@
+[debug] [2023-11-17T18:42:37.902Z] ----------------------------------------------------------------------
+[debug] [2023-11-17T18:42:37.903Z] Command:       /usr/bin/node /usr/bin/firebase init
+[debug] [2023-11-17T18:42:37.904Z] CLI Version:   12.9.1
+[debug] [2023-11-17T18:42:37.904Z] Platform:      linux
+[debug] [2023-11-17T18:42:37.904Z] Node Version:  v18.17.1
+[debug] [2023-11-17T18:42:37.904Z] Time:          Fri Nov 17 2023 18:42:37 GMT+0000 (Greenwich Mean Time)
+[debug] [2023-11-17T18:42:37.904Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2023-11-17T18:42:37.907Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2023-11-17T18:42:37.908Z] > authorizing via signed-in user (10773834@cityplym.ac.uk)
+[info] 
+     ######## #### ########  ######## ########     ###     ######  ########
+     ##        ##  ##     ## ##       ##     ##  ##   ##  ##       ##
+     ######    ##  ########  ######   ########  #########  ######  ######
+     ##        ##  ##    ##  ##       ##     ## ##     ##       ## ##
+     ##       #### ##     ## ######## ########  ##     ##  ######  ########
+
+You're about to initialize a Firebase project in this directory:
+
+  /home/jack/Documents/Work/College Group Project/KS222-Dynamics/fb-chat-app
+
+[info] 
+=== Project Setup
+[info] 
+[info] First, let's associate this project directory with a Firebase project.
+[info] You can create multiple project aliases by running firebase use --add, 
+[info] but for now we'll just set up a default project.
+[info] 
+[debug] [2023-11-17T18:42:45.718Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects pageSize=100
+[debug] [2023-11-17T18:42:46.303Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects 200
+[debug] [2023-11-17T18:42:46.304Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects [omitted]
+[info] i  Using project ks222-dynamics-chat-app (ks222-dynamics-chat-app) 
+[info] 
+=== Hosting Setup
+[debug] [2023-11-17T18:43:16.588Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/ks222-dynamics-chat-app [none]
+[debug] [2023-11-17T18:43:16.916Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/ks222-dynamics-chat-app 200
+[debug] [2023-11-17T18:43:16.917Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/ks222-dynamics-chat-app {"projectId":"ks222-dynamics-chat-app","projectNumber":"391831164512","displayName":"ks222-dynamics-chat-app","name":"projects/ks222-dynamics-chat-app","resources":{"hostingSite":"ks222-dynamics-chat-app"},"state":"ACTIVE","etag":"1_e4220ae3-dbfb-40a7-b4dc-c2feef66bb75"}
+[info] 
+[info] Your public directory is the folder (relative to your project directory) that
+[info] will contain Hosting assets to be uploaded with firebase deploy. If you
+[info] have a build process for your assets, use your build's output directory.
+[info] 
+[info] ✔  Wrote build/404.html 
+[debug] [2023-11-17T18:47:52.040Z] >>> [apiv2][query] GET https://www.gstatic.com/firebasejs/releases.json [none]
+[debug] [2023-11-17T18:47:52.153Z] <<< [apiv2][status] GET https://www.gstatic.com/firebasejs/releases.json 200
+[debug] [2023-11-17T18:47:52.153Z] <<< [apiv2][body] GET https://www.gstatic.com/firebasejs/releases.json {"current":{"version":"10.6.0","browserURL":"https://www.gstatic.com/firebasejs/10.6.0/firebase.js","packageURL":"https://www.gstatic.com/firebasejs/10.6.0/firebase.tgz"},"live":{"version":"10.6","browserURL":"https://www.gstatic.com/firebasejs/live/10.6/firebase.js","packageURL":"https://www.gstatic.com/firebasejs/live/10.6/firebase.tgz"},"components":{"analytics":"https://www.gstatic.com/firebasejs/10.6.0/firebase-analytics.js","app":"https://www.gstatic.com/firebasejs/10.6.0/firebase-app.js","app-check":"https://www.gstatic.com/firebasejs/10.6.0/firebase-app-check.js","auth":"https://www.gstatic.com/firebasejs/10.6.0/firebase-auth.js","auth/cordova":"https://www.gstatic.com/firebasejs/10.6.0/firebase-auth/cordova.js","functions":"https://www.gstatic.com/firebasejs/10.6.0/firebase-functions.js","firestore":"https://www.gstatic.com/firebasejs/10.6.0/firebase-firestore.js","firestore/lite":"https://www.gstatic.com/firebasejs/10.6.0/firebase-firestore/lite.js","installations":"https://www.gstatic.com/firebasejs/10.6.0/firebase-installations.js","storage":"https://www.gstatic.com/firebasejs/10.6.0/firebase-storage.js","performance":"https://www.gstatic.com/firebasejs/10.6.0/firebase-performance.js","remote-config":"https://www.gstatic.com/firebasejs/10.6.0/firebase-remote-config.js","messaging":"https://www.gstatic.com/firebasejs/10.6.0/firebase-messaging.js","messaging/sw":"https://www.gstatic.com/firebasejs/10.6.0/firebase-messaging/sw.js","database":"https://www.gstatic.com/firebasejs/10.6.0/firebase-database.js","firestore.memory":"https://www.gstatic.com/firebasejs/10.6.0/firebase-firestore.memory.js"}}
+[info] i  Skipping write of build/index.html 
+[info] 
+[info] i  Detected a .git folder at /home/jack/Documents/Work/College Group Project/KS222-Dynamics 
+[info] i  Authorizing with GitHub to upload your service account to a GitHub repository's secrets store. 
+[info] 
+[info] Visit this URL on this device to log in:
+[info] https://github.com/login/oauth/authorize?client_id=89cf50f02ac6aaed3484&state=822275717&redirect_uri=http%3A%2F%2Flocalhost%3A9005&scope=read%3Auser%20repo%20public_repo
+[info] 
+[info] Waiting for authentication...
+[debug] [2023-11-17T18:49:09.949Z] >>> [apiv2][query] POST https://github.com/login/oauth/access_token [none]
+[debug] [2023-11-17T18:49:09.949Z] >>> [apiv2][body] POST https://github.com/login/oauth/access_token [stream]
+[debug] [2023-11-17T18:49:10.308Z] <<< [apiv2][status] POST https://github.com/login/oauth/access_token 200
+[debug] [2023-11-17T18:49:10.308Z] <<< [apiv2][body] POST https://github.com/login/oauth/access_token {"access_token":"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","token_type":"bearer","scope":"read:user,repo"}
+[debug] [2023-11-17T18:49:10.311Z] >>> [apiv2][query] GET https://api.github.com/user [none]
+[debug] [2023-11-17T18:49:10.718Z] <<< [apiv2][status] GET https://api.github.com/user 200
+[debug] [2023-11-17T18:49:10.718Z] <<< [apiv2][body] GET https://api.github.com/user {"login":"JackGerry1","id":111564379,"node_id":"U_kgDOBqZWWw","avatar_url":"https://avatars.githubusercontent.com/u/111564379?v=4","gravatar_id":"","url":"https://api.github.com/users/JackGerry1","html_url":"https://github.com/JackGerry1","followers_url":"https://api.github.com/users/JackGerry1/followers","following_url":"https://api.github.com/users/JackGerry1/following{/other_user}","gists_url":"https://api.github.com/users/JackGerry1/gists{/gist_id}","starred_url":"https://api.github.com/users/JackGerry1/starred{/owner}{/repo}","subscriptions_url":"https://api.github.com/users/JackGerry1/subscriptions","organizations_url":"https://api.github.com/users/JackGerry1/orgs","repos_url":"https://api.github.com/users/JackGerry1/repos","events_url":"https://api.github.com/users/JackGerry1/events{/privacy}","received_events_url":"https://api.github.com/users/JackGerry1/received_events","type":"User","site_admin":false,"name":null,"company":null,"blog":"","location":null,"email":null,"hireable":null,"bio":null,"twitter_username":null,"public_repos":25,"public_gists":0,"followers":0,"following":0,"created_at":"2022-08-19T08:05:05Z","updated_at":"2023-10-07T07:03:02Z","private_gists":0,"total_private_repos":2,"owned_private_repos":2,"disk_usage":16795,"collaborators":0,"two_factor_authentication":true,"plan":{"name":"free","space":976562499,"collaborators":0,"private_repos":10000}}
+[info] 
+[info] ✔  Success! Logged into GitHub as JackGerry1 
+[info] 

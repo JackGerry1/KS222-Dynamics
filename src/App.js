@@ -31,6 +31,7 @@ function App() {
   return (
     <Router>
       <div className="App">
+      <h2>Welcome to the KS222 Dynamics</h2>
         {/* Navigation bar with links */}
         <nav>
           <ul>

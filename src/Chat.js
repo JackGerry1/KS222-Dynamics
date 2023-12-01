@@ -1,7 +1,7 @@
 // src/Pages/Chat.js
-import React, { useEffect } from 'react';
-import { signOut } from 'firebase/auth';
-import { useNavigate } from 'react-router-dom';
+import React, { useEffect } from "react";
+import { signOut } from "firebase/auth";
+import { Link, useNavigate } from "react-router-dom";
 
 function Chat({ user }) {
   const navigate = useNavigate();
@@ -9,7 +9,7 @@ function Chat({ user }) {
   useEffect(() => {
     // Redirect to login page if user is not logged in
     if (!user) {
-      navigate('/signin');
+      navigate("/signin");
     }
   }, [user, navigate]);
 
@@ -17,10 +17,10 @@ function Chat({ user }) {
     try {
       await signOut(user.auth);
       // If successful, navigate to the main page (App.js)
-      navigate('/');
+      navigate("/");
     } catch (error) {
       // Handle logout error
-      console.error('Error logging out:', error.message);
+      console.error("Error logging out:", error.message);
     }
   };
 
@@ -30,6 +30,7 @@ function Chat({ user }) {
       {user ? (
         <div>
           <p>You are logged in as: {user.email}</p>
+          <Link to="/Settings">Settings</Link>
           <button onClick={handleLogout}>Logout</button>
         </div>
       ) : (
@@ -43,4 +44,3 @@ function Chat({ user }) {
 }
 
 export default Chat;
-

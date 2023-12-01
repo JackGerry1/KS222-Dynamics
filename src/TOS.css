@@ -1,0 +1,24 @@
+/* Styles for the TOS text container */
+.terms-box {
+    width: 95%; /* Adjust the width as needed */
+    margin: 20px;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .terms-text {
+    text-align: left;
+    line-height: 1.5; /* Adjust the line height for better readability */
+  }
+  
+  /* Apply specific styles to links within the TOS text */
+  .terms-text a {
+    text-decoration: underline;
+  }
+  .terms-text h2 {
+    text-transform: uppercase;
+  }
+  

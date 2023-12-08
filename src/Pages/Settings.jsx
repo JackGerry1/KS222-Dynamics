@@ -128,8 +128,10 @@ const Settings = ({ user }) => {
               <option value="light">Light Theme</option>
               <option value="dark">Dark Theme</option>
             </select>
-            <div className="content">
-              <Link onClick={handleSettingsClose}>Save Changes</Link>
+            <div className="settings-content">
+              <button class="change-button" onClick={handleSettingsClose}>
+                Save Changes
+              </button>
             </div>
           </div>
         </form>

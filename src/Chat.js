@@ -17,7 +17,7 @@ function Chat({ user }) {
     try {
       await signOut(user.auth);
       // If successful, navigate to the main page (App.js)
-      navigate("/");
+      navigate("/signin");
     } catch (error) {
       // Handle logout error
       console.error("Error logging out:", error.message);
@@ -28,11 +28,20 @@ function Chat({ user }) {
     <div>
       <h2>Welcome to the Chat</h2>
       {user ? (
-        <div>
+        <div className="center">
+      <form>
+        <h1>Welcome to the Chat</h1>
+        <div className="signup-link">
           <p>You are logged in as: {user.email}</p>
-          <Link to="/Settings">Settings</Link>
+        </div>
+        <div className="signup-link">
+        <Link to="/Settings">Settings</Link>
+        </div>
+        <div className="signup-link">
           <button onClick={handleLogout}>Logout</button>
         </div>
+      </form>
+    </div>
       ) : (
         <div>
           <p>Please log in to access the chat.</p>

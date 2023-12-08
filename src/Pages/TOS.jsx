@@ -108,9 +108,11 @@ const TOS = () => {
             governed by the laws of Country without regards to its conflict of
             law provisions.
           </p>
-          <div className="content">
-            <Link to="/">Home</Link>
-          </div>
+          <div className="settings-content">
+          <Link className="change-button" to="/">
+            Home
+          </Link>
+        </div>
         </div>
       </div>
     </div>

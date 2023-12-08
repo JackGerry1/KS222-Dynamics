@@ -3,8 +3,10 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../firebase";
+import { addUsername } from "../db";
 
 function SignUp() {
+  const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isChecked, setIsChecked] = useState(false);
@@ -14,7 +16,12 @@ function SignUp() {
     e.preventDefault();
 
     try {
-      await createUserWithEmailAndPassword(auth, email, password);
+      // Creating the user
+      const userInfo = await createUserWithEmailAndPassword(auth, email, password);
+
+      // links the db.js - This is used to get and store the username/userID
+      await addUsername(userInfo.user.uid, username);
+
       // If successful, navigate to the sign-in page or any other desired location
       navigate("/signin");
     } catch (error) {
@@ -30,6 +37,13 @@ function SignUp() {
     <div>
       <h2>Sign Up</h2>
       <form>
+      <label>Username:</label>
+        <input
+          type="text"
+          value={username}
+          onChange={(e) => setUsername(e.target.value)}
+        />
+        <br />
         <label>Email:</label>
         <input
           type="email"

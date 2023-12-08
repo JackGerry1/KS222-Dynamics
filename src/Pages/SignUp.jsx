@@ -31,53 +31,62 @@ function SignUp() {
   };
 
   // Enable/disable the sign-up button based on form inputs and checkbox status
-  const isSignUpDisabled = !isChecked || !email || !password;
+  const isSignUpDisabled = !isChecked || !email || !password || !username;
 
   return (
-    <div>
+    <div className="center">
       <h2>Sign Up</h2>
       <form>
-      <label>Username:</label>
-        <input
+      <div className="txt-field">
+      <input
           type="text"
           value={username}
           onChange={(e) => setUsername(e.target.value)}
+          required
         />
-        <br />
-        <label>Email:</label>
+        <label>Username:</label>
+      </div>
+      <div className="txt-field">
         <input
-          type="email"
+          type="text"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
+          required
         />
-        <br />
-        <label>Password:</label>
-        <input
+        <label>Email:</label>
+      </div>
+      <div className="txt-field">
+      <input
           type="password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
+          required
         />
-        <label>
-          <br />
-          <input
-            type="checkbox"
-            checked={isChecked}
-            onChange={(e) => setIsChecked(e.target.checked)}
-          />
-          I have read and agree to KS222 Dynamic Chat App's <Link to="/TOS">Terms of Service</Link>
-        </label>
-        <br />
-        <button
-          type="button"
+        <label>Password:</label>
+      </div>
+      <div className="signup-link">
+      <label>
+            <input
+              type="checkbox"
+              checked={isChecked}
+              onChange={(e) => setIsChecked(e.target.checked)}
+              required
+            />
+            I have read and agree to KS222 Dynamic Chat App's{" "}
+            <Link to="/TOS">Terms of Service</Link>
+          </label>
+      </div>
+      <button
+          type="submit"
           onClick={handleSignUp}
           disabled={isSignUpDisabled}
         >
           Sign Up
         </button>
+        <div className="signup-link">
+          Already have an account? <Link to="/signin">Sign In</Link>
+        </div>
       </form>
-      <p>
-        Already have an account? <Link to="/signin">Sign In</Link>
-      </p>
     </div>
   );
 }

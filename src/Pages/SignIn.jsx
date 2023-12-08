@@ -1,5 +1,5 @@
 // src/Pages/SignIn.js
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import { auth } from '../firebase';
@@ -7,7 +7,12 @@ import { auth } from '../firebase';
 function SignIn() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [isSignInDisabled, setIsSignInDisabled] = useState(true);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    setIsSignInDisabled(!email || !password); // Disable button if email or password is empty
+  }, [email, password]);
 
   const handleSignIn = async (e) => {
     e.preventDefault();
@@ -23,32 +28,40 @@ function SignIn() {
   };
 
   return (
-    <div>
-      <h2>Sign In</h2>
+    <div className="center">
+      <h1>Sign In</h1>
       <form>
-        <label>Email:</label>
-        <input
-          type="email"
-          placeholder="Email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-        />
-        <br />
-        <label>Password:</label>
-        <input
-          type="password"
-          placeholder="Password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        />
-        <br />
-        <button type="submit" onClick={handleSignIn}>
+        <div className="txt-field">
+          <input
+            type="text" // this is a bodge job fix later
+            placeholder="Email"
+            value={email}
+            required
+            onChange={(e) => setEmail(e.target.value)}
+          />
+          <label>Email</label>
+        </div>
+        <div className="txt-field">
+          <input
+            type="password"
+            placeholder="Password"
+            required
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
+          <label>Password</label>
+        </div>
+        <button
+          type="submit"
+          onClick={handleSignIn}
+          disabled={isSignInDisabled}
+        >
           Sign In
         </button>
+        <div className="signup-link">
+          Don't have an account? <Link to="/signup">Sign Up</Link>
+        </div>
       </form>
-      <p>
-        Don't have an account? <Link to="/signup">Sign Up</Link>
-      </p>
     </div>
   );
 }

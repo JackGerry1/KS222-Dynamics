@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import { auth } from '../firebase';
+import logoImage from "../Assets/Logo1.png";
 
 function SignIn() {
   const [email, setEmail] = useState('');
@@ -29,6 +30,9 @@ function SignIn() {
 
   return (
     <div className="center">
+      <Link to="/">
+        <img src={logoImage} alt="Logo" className="sign-logo" />
+      </Link>
       <h1>Sign In</h1>
       <form>
         <div className="txt-field">

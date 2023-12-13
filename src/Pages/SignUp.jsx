@@ -4,6 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../firebase";
 import { addUsername } from "../db";
+import logoImage from "../Assets/Logo1.png"; 
 
 function SignUp() {
   const [username, setUsername] = useState("");
@@ -35,7 +36,10 @@ function SignUp() {
 
   return (
     <div className="center">
-      <h2>Sign Up</h2>
+      <Link to="/">
+        <img src={logoImage} alt="Logo" className="sign-logo" />
+      </Link>
+      <h1>Sign Up</h1>
       <form>
       <div className="txt-field">
       <input

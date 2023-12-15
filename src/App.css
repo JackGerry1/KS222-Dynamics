@@ -36,3 +36,47 @@
     transform: rotate(360deg);
   }
 }
+
+.sign-logo {
+  width: 150px; /* Adjust the width as needed for the Home page */
+  height: auto;
+}
+
+/* App.css or a separate CSS file */
+.home-logo {
+  width: 450px; /* Adjust the width as needed for the Home page */
+  height: auto;
+}
+
+.button {
+  display: block;
+  margin: 10px auto; 
+  padding: 15px;
+  width: 150px; 
+  font-size: 16px;
+  text-align: center;
+  text-decoration: none;
+  cursor: pointer;
+  border: 2px solid #3498db;
+  color: #3498db;
+  border-radius: 5px;
+  transition: background-color 0.3s;
+}
+
+.button:hover {
+  background-color: #3498db;
+  color: white;
+}
+
+/* Media query for smaller screens */
+@media only screen and (max-width: 600px) {
+  .button {
+    width: 50%;
+  }
+  .home-logo {
+    width: 50%;
+  }
+  .sign-logo {
+    width: 50%;
+  }
+}

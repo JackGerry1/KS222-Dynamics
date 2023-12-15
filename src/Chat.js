@@ -2,6 +2,8 @@
 import React, { useEffect } from "react";
 import { signOut } from "firebase/auth";
 import { Link, useNavigate } from "react-router-dom";
+import { Navigate } from "react-router-dom";
+
 
 function Chat({ user }) {
   const navigate = useNavigate();
@@ -16,7 +18,7 @@ function Chat({ user }) {
   const handleLogout = async () => {
     try {
       await signOut(user.auth);
-      // If successful, navigate to the main page (App.js)
+      // If successful, navigate to home
       navigate("/signin");
     } catch (error) {
       // Handle logout error
@@ -26,7 +28,6 @@ function Chat({ user }) {
 
   return (
     <div>
-      <h2>Welcome to the Chat</h2>
       {user ? (
         <div className="center">
       <form>
@@ -43,10 +44,7 @@ function Chat({ user }) {
       </form>
     </div>
       ) : (
-        <div>
-          <p>Please log in to access the chat.</p>
-          <p>Redirecting to login page...</p>
-        </div>
+        <Navigate to="/signin" />
       )}
     </div>
   );

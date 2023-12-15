@@ -109,8 +109,8 @@ const TOS = () => {
             law provisions.
           </p>
           <div className="settings-content">
-          <Link className="change-button" to="/">
-            Home
+          <Link to="/signup" className="button">
+            Sign Up
           </Link>
         </div>
         </div>

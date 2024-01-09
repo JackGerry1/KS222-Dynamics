@@ -1,11 +1,14 @@
 // TOS.jsx
 // URL: https://www.termsofservicegenerator.net/ Accessed: 1/12/23
 
+// import the relevent react dependices alongside the css files. 
 import React from "react";
 import { Link } from "react-router-dom";
 import "../index.css";
 import "../TOS.css";
 
+
+// render the TOS page with all the HTML content
 const TOS = () => {
   return (
     <div className="page-container">
@@ -108,15 +111,17 @@ const TOS = () => {
             governed by the laws of Country without regards to its conflict of
             law provisions.
           </p>
+          {/* button that redirects back to signup */}
           <div className="settings-content">
-          <Link to="/signup" className="button">
-            Sign Up
-          </Link>
-        </div>
-        </div>
-      </div>
-    </div>
+            <Link to="/signup" className="button">
+              Sign Up
+            </Link>
+          </div> {/* end of settings-content */} 
+        </div> {/* end of terms-text */} 
+      </div> {/* end of terms-box */} 
+    </div> // end of page-container
   );
 };
 
+// Exporting the TOS component as default
 export default TOS;

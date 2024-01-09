@@ -1,197 +1,226 @@
+/* Settings.css */
+
 /* Styles for the modal */
 .modal {
-    display: flex;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black overlay */
-    justify-content: center;
-    align-items: center;
-    font-family: Arial, Helvetica, sans-serif;
-  }
-  
-  /* Styles for the modal content */
-  .modal-content {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    background-color: white;
-    width: 85%;
-    height: 85%;
-    max-height: 100%; /* Change from 'height' to 'max-height' */
-    overflow-y: auto; /* Add overflow-y to enable vertical scrollbar */
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
-    position: relative;
-  }
-  
-  .settings-form {
-    display: flex;
-    width: 60%;
-    flex-wrap: wrap;
-    justify-content: center;
-  }
-  
-  .column {
-    flex: 0 0 100%; /* Adjust the width of each column */
-    margin: 5px;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-  }
-  .settings-content {
-    display: flex;
-    flex-direction: column; /* Stack elements vertically */
-    align-items: center;
-    margin: 0;
-  }
-  .column .content {
-    margin-bottom: 15px;
-  }
-  
-  .column h3 {
-    margin-top: 5;
-  }
-  .delete-account-button {
-    display: block;
-    cursor: pointer;
-    width: 190px;
-    font-size: medium;
-    padding: 10px 20px;
-    margin: 5px 0;
-    background-color: #ff6347;
-    color: white;
-    text-align: center;
-    text-decoration: none;
-    border-radius: 5px;
-  }
-  
-  .delete-account-button:hover {
-    background-color: #ff473d; /* Change color on hover */
-  }
-  .change-button {
-    display: block;
-    cursor: pointer;
-    width: 190px;
-    font-size: medium;
-    padding: 10px 20px;
-    margin: 5px 0;
-    background-color: #007bff;
-    color: white;
-    text-align: center;
-    text-decoration: none;
-    border-radius: 5px;
-  }
-  
-  .change-button:hover {
-    background-color: #0056b3; /* Change color on hover */
-  }
-  /* Styles for form labels */
-  .model label {
-    margin-bottom: 5px;
-    margin-top: 5px;
-    font-weight: bold;
-  }
-  
-  /* Styles for form inputs */
-  .settings-form input[type="text"],
-  .settings-form input[type="email"],
-  .settings-form input[type="password"],
-  .settings-form select {
-    display: block;
-    width: calc(100% - 20px); /* Adjust width as needed */
-    padding: 8px;
-    margin-bottom: 15px;
-    margin-top: 5px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-  }
-  
-  /* Style for the checkbox */
-  .settings-form input[type="checkbox"] {
-    margin-right: 5px;
-  }
-  .settings-form input[type="file"] {
-    display: block;
-    margin-bottom: 15px;
-    margin-top: 5px;
-  }
-  
-  /* Styles for buttons */
-  .settings-content button {
-    padding: 10px 15px;
-    margin-right: 10px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-  }
-  
-  /* Specific styling for links inside the form */
-  .close-button a {
-    text-decoration: none;
-    cursor: pointer;
-    margin-right: 10px;
-    color: #000;
-  }
-  .close-button {
-    position: absolute; /* Absolute positioning */
-    top: 10px; /* Adjust top position */
-    right: 10px; /* Adjust right position */
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    font-family: Arial, sans-serif;
-  }
-  
-  .close-icon {
-    font-size: 36px;
-    border: 2px solid #000;
-    border-radius: 50%;
-    width: 40px;
-    height: 40px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    transition: background-color 0.3s;
-  }
-  .profile-picture {
-    display: flex;
-    align-items: center;
-  }
-  
-  .profile-picture::before {
-    content: "";
-    display: block;
-    width: 40px; /* Adjust the size of the circle */
-    height: 40px; /* Adjust the size of the circle */
-    border-radius: 50%;
-    background-color: #043199; /* Default color for the circle */
-    margin-right: 10px; /* Adjust the distance between the circle and the text */
-  }
-  .close-icon:hover {
-    background-color: #c9c3c3; /* Change background color on hover */
-  }
-  
-  .close-text {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-top: 5px;
-    font-weight: bold;
-    color: #000;
-  }
-  .fixed-bottom {
-    position: fixed;
-    bottom: 8vb; /* Adjust the distance from the bottom */
-    width: 100%;
-    display: flex;
-    justify-content: center;
-  }
-  .form-row {
-    display: flex;
-    align-items: center;
-    margin-bottom: 10px; /* Add margin between rows */
-  }
-  
+  /* Position and layout for the modal */
+  display: flex;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black overlay */
+  justify-content: center;
+  align-items: center;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+/* Styles for the modal content */
+.modal-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: white;
+  width: 85%;
+  height: 85%;
+  max-height: 100%;
+  overflow-y: auto; /* Add overflow-y to enable vertical scrollbar */
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+  position: relative;
+}
+
+/* Styles for the form within the modal */
+.settings-form {
+  display: flex;
+  width: 60%;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+/* Styles for individual columns in the form */
+.column {
+  flex: 0 0 100%;
+  margin: 5px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+}
+
+/* Styles for content within the settings section */
+.settings-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 0;
+}
+
+/* Add margin below content within columns */
+.column .content {
+  margin-bottom: 15px;
+}
+
+/* Adjust margin at the top for h3 elements inside columns */
+.column h3 {
+  margin-top: 5px;
+}
+
+/* Styles for the 'Delete Account' button */
+.delete-account-button {
+  display: block;
+  cursor: pointer;
+  width: 190px;
+  font-size: medium;
+  padding: 10px 20px;
+  margin: 5px 0;
+  background-color: #ff6347;
+  color: white;
+  text-align: center;
+  text-decoration: none;
+  border-radius: 5px;
+}
+
+/* Change button color on hover for 'Delete Account' */
+.delete-account-button:hover {
+  background-color: #ff473d;
+}
+
+/* Styles for the 'Change' button */
+.change-button {
+  display: block;
+  cursor: pointer;
+  width: 190px;
+  font-size: medium;
+  padding: 10px 20px;
+  margin: 5px 0;
+  background-color: #007bff;
+  color: white;
+  text-align: center;
+  text-decoration: none;
+  border-radius: 5px;
+}
+
+/* Change button color on hover for 'Change' */
+.change-button:hover {
+  background-color: #0056b3;
+}
+
+/* Styles for form labels */
+.model label {
+  margin-bottom: 5px;
+  margin-top: 5px;
+  font-weight: bold;
+}
+
+/* Styles for form inputs */
+.settings-form input[type="text"],
+.settings-form input[type="email"],
+.settings-form input[type="password"],
+.settings-form select {
+  display: block;
+  width: calc(100% - 20px);
+  padding: 8px;
+  margin-bottom: 15px;
+  margin-top: 5px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+/* Style for the checkbox */
+.settings-form input[type="checkbox"] {
+  margin-right: 5px;
+}
+/* Style for the file input */
+.settings-form input[type="file"] {
+  display: block;
+  margin-bottom: 15px;
+  margin-top: 5px;
+}
+
+/* Styles for buttons */
+.settings-content button {
+  padding: 10px 15px;
+  margin-right: 10px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+/* Specific styling for links inside the form */
+.close-button a {
+  text-decoration: none;
+  cursor: pointer;
+  margin-right: 10px;
+  color: #000;
+}
+/* Styles for the close button */
+.close-button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-family: Arial, sans-serif;
+}
+
+/* Styles for the close icon */
+.close-icon {
+  font-size: 36px; /* Icon size */
+  border: 2px solid #000; /* Border around the icon */
+  border-radius: 50%; /* Circular shape */
+  width: 40px;
+  height: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: background-color 0.3s; /* Smooth background color transition */
+}
+
+/* Styles for the profile picture container */
+.profile-picture {
+  display: flex;
+  align-items: center;
+}
+
+/* Styling for the circular profile picture */
+.profile-picture::before {
+  content: ""; /* Pseudo-element for the circular shape */
+  display: block;
+  width: 40px; /* Diameter of the circle */
+  height: 40px; /* Diameter of the circle */
+  border-radius: 50%; /* Circle shape */
+  background-color: #043199;
+  margin-right: 10px;
+}
+
+/* Change background color on hover for the close icon */
+.close-icon:hover {
+  background-color: #c9c3c3;
+}
+
+/* Styling for the close text */
+.close-text {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 5px;
+  font-weight: bold;
+  color: #000;
+}
+
+/* Styles for the fixed-bottom element */
+.fixed-bottom {
+  position: fixed;
+  bottom: 8vb;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+/* Styling for form rows */
+.form-row {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}

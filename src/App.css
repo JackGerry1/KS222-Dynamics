@@ -1,84 +1,60 @@
+/* TODO: Discuss merging this code with the index.css file or vice versa
+because it could get a bit messy in the future/ i don't see the point in splitting these files up if they are going to be called
+on the same pages. - Jack G
+
+*/
+
+/* App.css */
+
+/* Main container styles */
 .App {
-  text-align: center;
+  text-align: center; 
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
-
+/* Specific styling for the sign logo */
 .sign-logo {
-  margin-top: 5px;
-  margin-bottom: -40px;
+  margin-top: 5px; 
+  margin-bottom: -40px; 
   width: 150px; 
-  height: auto;
-  
+  height: auto; 
 }
 
-/* App.css or a separate CSS file */
+/* Specific styling for the home logo */
 .home-logo {
-  width: 450px;
-  height: auto;
+  width: 450px; 
+  height: auto; /* Auto-adjusting height */
 }
 
+/* Styling for buttons */
 .button {
+  /* Centering the button */
   display: block;
-  margin: 10px auto; 
-  padding: 15px;
+  margin: 10px auto;
+  padding: 15px; 
   width: 150px; 
-  font-size: 16px;
-  text-align: center;
-  text-decoration: none;
-  cursor: pointer;
-  border: 2px solid #3498db;
-  color: #3498db;
-  border-radius: 5px;
-  transition: background-color 0.3s;
+  font-size: 16px; 
+  text-align: center; 
+  text-decoration: none; /* No underlining for links */
+  cursor: pointer; 
+  border: 2px solid #3498db; 
+  color: #3498db; 
+  border-radius: 5px; 
+  transition: background-color 0.3s; /* Smooth color transition */
 }
 
+/* Button hover effect */
 .button:hover {
-  background-color: #3498db;
-  color: white;
+  background-color: #3498db; 
+  color: white; 
 }
 
 /* Media query for smaller screens */
 @media only screen and (max-width: 600px) {
+  /* Adjusting button and logo sizes for smaller screens */
   .button {
-    width: 50%;
+    width: 50%; 
   }
-  .home-logo {
-    width: 50%;
-  }
+  .home-logo,
   .sign-logo {
     width: 50%;
   }

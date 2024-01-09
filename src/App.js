@@ -1,5 +1,8 @@
+// App.js
+
+// import the relevent react dependices alongside all of the page components
 import React, { useState, useEffect } from "react";
-import { BrowserRouter as Router, Routes, Route, Link, Navigate } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "./firebase";
 import "./App.css";
@@ -12,6 +15,7 @@ import Settings from "./Pages/Settings";
 
 
 function App() {
+  // create a unautorised user to start with
   const [user, setUser] = useState(null);
 
   useEffect(() => {
@@ -69,5 +73,6 @@ function App() {
   );
 }
 
+// Exporting the App component as default
 export default App;
 

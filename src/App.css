@@ -38,13 +38,16 @@
 }
 
 .sign-logo {
-  width: 150px; /* Adjust the width as needed for the Home page */
+  margin-top: 5px;
+  margin-bottom: -40px;
+  width: 150px; 
   height: auto;
+  
 }
 
 /* App.css or a separate CSS file */
 .home-logo {
-  width: 450px; /* Adjust the width as needed for the Home page */
+  width: 450px;
   height: auto;
 }
 

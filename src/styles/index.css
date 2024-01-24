@@ -15,8 +15,12 @@
 body {
   margin: 0;
   padding: 0;
-  background: linear-gradient(120deg, #054ae6, #022166); /* Gradient background for the body */ 
-  height: 100vh; 
+  background: linear-gradient(
+    120deg,
+    #054ae6,
+    #022166
+  ); /* Gradient background for the body */
+  height: 100vh;
 }
 
 /* Styling for the center class */
@@ -26,50 +30,50 @@ body {
   left: 50%; /* Center horizontally */
   transform: translate(-50%, -50%); /* Center the element */
   width: 400px;
-  background: white; 
-  border-radius: 10px; 
+  background: white;
+  border-radius: 10px;
   box-shadow: 10px 10px 15px rgba(0, 0, 0, 0.05); /* Box shadow for a slight elevation */
 }
 
 /* Styling for the h1 element inside .center */
 .center h1 {
-  text-align: center; 
-  padding: 20px 0; 
+  text-align: center;
+  padding: 20px 0;
   border-bottom: 1px solid silver;
 }
 
 /* Styling for the form inside .center */
 .center form {
-  padding: 0 40px; 
+  padding: 0 40px;
   box-sizing: border-box;
 }
 
 /* Styling for the input fields inside .txt-field */
 form .txt-field {
   position: relative;
-  border-bottom: 2px solid #adadad; 
+  border-bottom: 2px solid #adadad;
   margin: 30px 0; /* Margin around input fields */
 }
 
 /* Styling for the input fields inside .txt-field */
 .txt-field input {
-  width: 100%; 
-  padding: 0 5px; 
-  height: 40px; 
-  font-size: 16px; 
-  border: none; 
-  background: none; 
+  width: 100%;
+  padding: 0 5px;
+  height: 40px;
+  font-size: 16px;
+  border: none;
+  background: none;
   outline: none; /* Remove default focus outline */
 }
 
 /* Styling for the label inside .txt-field */
 .txt-field label {
-  position: absolute; 
+  position: absolute;
   top: 50%; /* Position label in the middle */
   left: 5px; /* Left offset for label */
-  color: #adadad; 
+  color: #adadad;
   transform: translateY(-50%); /* Center label vertically */
-  font-size: 16px; 
+  font-size: 16px;
   pointer-events: none; /* Disable pointer events for label */
   transition: 0.5s; /* Transition effect for label */
 }
@@ -84,37 +88,37 @@ form .txt-field {
 /* Styling for the button inside .center */
 .center button {
   width: 100%;
-  height: 50px; 
-  border: 1px solid; 
-  background: #054ae6; 
-  border-radius: 25px; 
-  font-size: 18px; 
-  color: #e9f4fb; 
-  font-weight: 700; 
-  cursor: pointer; 
+  height: 50px;
+  border: 1px solid;
+  background: #054ae6;
+  border-radius: 25px;
+  font-size: 18px;
+  color: #e9f4fb;
+  font-weight: 700;
+  cursor: pointer;
   outline: none; /* Remove default focus outline */
 }
 
 /* Styling for the button when hovered */
 .center button:hover {
-  border-color: #054ae6; 
+  border-color: #054ae6;
   transition: 0.5s;
 }
 
 /* Styling for the button when disabled */
 .center button:disabled {
-  background: #ccc; 
-  border-color: #999; 
-  cursor: not-allowed; 
-  color: #999; 
+  background: #ccc;
+  border-color: #999;
+  cursor: not-allowed;
+  color: #999;
 }
 
 /* Styling for the signup-link class */
 .signup-link {
-  margin: 30px 0; 
-  text-align: center; 
-  font-size: 16px; 
-  color: #666666; 
+  margin: 30px 0;
+  text-align: center;
+  font-size: 16px;
+  color: #666666;
 }
 
 /* Styling for the anchor tag inside .signup-link */
@@ -125,5 +129,64 @@ form .txt-field {
 
 /* Styling for the anchor tag when hovered */
 .signup-link a:hover {
-  text-decoration: underline; 
+  text-decoration: underline;
+}
+
+/* App.css */
+
+/* Specific styling for the sign logo */
+.sign-logo {
+  margin: 5px auto -40px; /* Center vertically and horizontally */
+  display: block; /* Make sure it behaves as a block element */
+  width: 150px;
+  height: auto;
+}
+
+/* centered container for home-logo */
+.center-container {
+  display: flex;
+  flex-direction: column; /* Set to column layout */
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+/* Specific styling for the home logo */
+.home-logo {
+  width: 450px;
+  height: auto; /* Auto-adjusting height */
+}
+
+/* Styling for buttons */
+.button {
+  /* Centering the button */
+  margin: 10px auto;
+  padding: 15px;
+  width: 150px;
+  font-size: 16px;
+  text-align: center;
+  text-decoration: none; /* No underlining for links */
+  cursor: pointer;
+  border: 2px solid #3498db;
+  color: #3498db;
+  border-radius: 5px;
+  transition: background-color 0.3s; /* Smooth color transition */
+}
+
+/* Button hover effect */
+.button:hover {
+  background-color: #3498db;
+  color: white;
+}
+
+/* Media query for smaller screens */
+@media only screen and (max-width: 600px) {
+  /* Adjusting button and logo sizes for smaller screens */
+  .button {
+    width: 50%;
+  }
+  .home-logo,
+  .sign-logo {
+    width: 50%;
+  }
 }

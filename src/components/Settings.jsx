@@ -1,35 +1,25 @@
 // src/Pages/Settings.js
 
 // Settings.jsx with the releavent react includes and the css files
-import React, { useState, useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import "../index.css";
-import "../Settings.css";
+import React, { useState } from "react";
+import { Link } from "react-router-dom";
+import "../styles/Settings.css";
 
+// function to handle the settings page
 const Settings = ({ user }) => {
   // State for toggling the settings visibility
-  const [showSettings, setShowSettings] = useState(true); 
-  // Access navigation functions from react-router-dom
-  const navigate = useNavigate(); 
-
-  useEffect(() => {
-    // Navigate to the signin page if the user is not logged in
-    if (!user) {
-      navigate("/signin"); 
-    }
-  // Dependency array to run the effect when the user or navigate changes
-  }, [user, navigate]); 
+  const [showSettings, setShowSettings] = useState(true);
 
   // function for the close buttons
   const handleSettingsClose = () => {
     // Hide the settings component
     setShowSettings(false);
-    // Go back to the previous page using browser history 
-    window.history.back(); 
+    // Go back to the previous page using browser history
+    window.history.back();
   };
 
   // Hide settings when not active
-  if (!showSettings) return null; 
+  if (!showSettings) return null;
 
   return (
     // Modal container so it popups instead of redirecting to a new page
@@ -45,7 +35,8 @@ const Settings = ({ user }) => {
             {/* Text representation of the 'ESC' key/symbol */}
             <span class="close-text">ESC</span>
           </Link>
-        </div> {/* end of close-button */}
+        </div>{" "}
+        {/* end of close-button */}
         {/* Form for user settings */}
         <h2>Settings</h2>
         <form class="settings-form">
@@ -62,8 +53,10 @@ const Settings = ({ user }) => {
                 id="profilePic"
                 name="profilePic"
                 accept="image/*"
-              />{/* end of profile picture */}
-            </div> {/* end of column */}
+              />
+              {/* end of profile picture */}
+            </div>{" "}
+            {/* end of column */}
             <label for="displayName">Display Name:</label>
             {/* Label for display name input with text type and placeholder text*/}
             <input
@@ -109,10 +102,12 @@ const Settings = ({ user }) => {
             {/* Change Password Button */}
             <div className="settings-content">
               <button class="change-button">Change Password</button>
-            </div> {/* end of settings-content */}
-          </div> {/* end of column */}
-        </form> {/* end of settings-form */}
-        
+            </div>{" "}
+            {/* end of settings-content */}
+          </div>{" "}
+          {/* end of column */}
+        </form>{" "}
+        {/* end of settings-form */}
         <form class="settings-form">
           <div class="column">
             {/* Subtitle for the danger zone */}
@@ -174,7 +169,6 @@ const Settings = ({ user }) => {
           <div className="column">
             {/* Title for settings section */}
             <h3>Notification & Appearance Settings</h3>
-
             {/* Row for enabling notifications */}
             <div className="form-row">
               {/* Label for notifications */}
@@ -185,7 +179,6 @@ const Settings = ({ user }) => {
             </div>
             {/* Label for selecting the theme */}
             <label htmlFor="theme">Choose Theme:</label>
-
             {/* Dropdown for theme selection */}
             <select id="theme" name="theme">
               {/* Option for selecting the light theme */}
@@ -199,11 +192,15 @@ const Settings = ({ user }) => {
               {/* Button to save changes */}
               <button class="change-button" onClick={handleSettingsClose}>
                 Save Changes
-              </button> 
-            </div> {/* end of settings-content */}
-          </div> {/* end of column */}
-        </form> {/* end of settings-form */}
-      </div> {/* end of modal-content */}
+              </button>
+            </div>{" "}
+            {/* end of settings-content */}
+          </div>{" "}
+          {/* end of column */}
+        </form>{" "}
+        {/* end of settings-form */}
+      </div>{" "}
+      {/* end of modal-content */}
     </div> // end of modal
   );
 };

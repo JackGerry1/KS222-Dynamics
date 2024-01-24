@@ -4,9 +4,8 @@
 // import the relevent react dependices alongside the css files. 
 import React from "react";
 import { Link } from "react-router-dom";
-import "../index.css";
-import "../TOS.css";
-
+import "../styles/index.css";
+import "../styles/TOS.css";
 
 // render the TOS page with all the HTML content
 const TOS = () => {
@@ -114,7 +113,7 @@ const TOS = () => {
           {/* button that redirects back to signup */}
           <div className="settings-content">
             <Link to="/signup" className="button">
-              Sign Up
+              Back To Signup Page
             </Link>
           </div> {/* end of settings-content */} 
         </div> {/* end of terms-text */} 

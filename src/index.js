@@ -1,15 +1,24 @@
-// Import react libaries, stylings and App component
-import React from 'react';
-import ReactDOM from 'react-dom/client'; 
-import './index.css'; 
-import App from './App'; 
+// Importing necessary dependencies from React and ReactDOM
+import React from "react";
+import ReactDOM from "react-dom/client";
 
-// Create a root React DOM node using ReactDOM's createRoot method
-const root = ReactDOM.createRoot(document.getElementById('root'));
+// Importing the main App component
+import App from "./App";
 
-// Render the main App component within React's StrictMode
+// Importing context providers for authentication and chat
+import { AuthContextProvider } from "./context/AuthContext";
+import { ChatContextProvider } from "./context/ChatContext";
+
+// Creating a root for rendering the React application in the specified HTML element
+const root = ReactDOM.createRoot(document.getElementById("root"));
+
+// Rendering the main App component wrapped in context providers and StrictMode
 root.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>
+  <AuthContextProvider>
+    <ChatContextProvider>
+      <React.StrictMode>
+        <App />
+      </React.StrictMode>
+    </ChatContextProvider>
+  </AuthContextProvider>
 );

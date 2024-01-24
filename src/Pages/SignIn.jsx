@@ -4,9 +4,10 @@
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { signInWithEmailAndPassword } from "firebase/auth";
-import { auth } from "../firebase"; 
-import logoImage from "../Assets/Logo1.png"; 
+import { auth } from "../firebase";
+import logoImage from "../Assets/Logo1.png";
 
+// Function to handle for signup page
 function SignIn() {
   // State variables to manage email, password, and button disablement
   const [email, setEmail] = useState("");
@@ -14,7 +15,7 @@ function SignIn() {
   const [isSignInDisabled, setIsSignInDisabled] = useState(true);
 
   // Navigation hook from React Router
-  const navigate = useNavigate(); 
+  const navigate = useNavigate();
 
   // Effect to enable/disable sign-in button based on email and password state
   useEffect(() => {
@@ -30,7 +31,7 @@ function SignIn() {
       await signInWithEmailAndPassword(auth, email, password);
 
       // If successful, navigate to the chat page or any other desired location
-      navigate("/chat");
+      navigate("/chatpage");
     } catch (error) {
       // Handle sign-in error, log the error message to the console
       console.error("Error signing in:", error.message);
@@ -56,7 +57,8 @@ function SignIn() {
             onChange={(e) => setEmail(e.target.value)} // Set email state on change
           />
           <label>Email</label>
-        </div> {/* end of txt-field */}
+        </div>{" "}
+        {/* end of txt-field */}
         {/* Input field for password */}
         <div className="txt-field">
           <input
@@ -67,7 +69,8 @@ function SignIn() {
             onChange={(e) => setPassword(e.target.value)} // Set password state on change
           />
           <label>Password</label>
-        </div> {/* end of txt-field */}
+        </div>{" "}
+        {/* end of txt-field */}
         {/* Sign-in button */}
         <button
           type="submit"
@@ -79,8 +82,9 @@ function SignIn() {
         {/* Link to the signup page */}
         <div className="signup-link">
           Don't have an account? <Link to="/signup">Sign Up</Link>
-        </div> {/* end of signup-link */}
-      </form> 
+        </div>{" "}
+        {/* end of signup-link */}
+      </form>
     </div> // end of center
   );
 }

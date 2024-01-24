@@ -3,40 +3,66 @@
 // Import relevent react and firebase dependices alongside the addUsername function from the db.js file
 // also imported the logo image
 import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import { createUserWithEmailAndPassword } from "firebase/auth";
-import { auth } from "../firebase";
-import { addUsername } from "../db"; 
+import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
+import { auth, db } from "../firebase";
+import { doc, setDoc } from "firebase/firestore";
+import { useNavigate, Link } from "react-router-dom";
 import logoImage from "../Assets/Logo1.png";
 
+// Function to handle for signup page
 function SignUp() {
+  // State variables
+  const [, setErr] = useState(false);
+  const [, setLoading] = useState(false);
+  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [isChecked, setIsChecked] = useState(false);
+  const navigate = useNavigate();
 
-  // states for username, email, password, tos checkbox and navigation hook
-  const [username, setUsername] = useState(""); 
-  const [email, setEmail] = useState(""); 
-  const [password, setPassword] = useState(""); 
-  const [isChecked, setIsChecked] = useState(false); 
-  const navigate = useNavigate(); 
-
-  // Function to handle the sign-up process
-  const handleSignUp = async (e) => {
-    e.preventDefault(); // Prevent default form submission behavior
+  // Function to handle form submission
+  const handleSubmit = async (e) => {
+    setLoading(true); // Set loading state to true
+    e.preventDefault(); // Prevent the default form submission behavior, which is refreshing page
 
     try {
-      // Creating a user using Firebase authentication
-      const userInfo = await createUserWithEmailAndPassword(auth, email, password);
+      // Create user with provided email and password
+      const res = await createUserWithEmailAndPassword(auth, email, password);
 
-      // Calling a function from the database module to add username linked to the user ID
-      await addUsername(userInfo.user.uid, username);
+      try {
+        // Update user profile with provided username
+        await updateProfile(res.user, {
+          displayName: username,
+          // photoURL: downloadURL, // Photo URL can be added if needed
+        });
 
-      // If successful, navigate to the sign-in page or any other desired location
-      navigate("/signin");
-    } catch (error) {
-      // Handle sign-up error
-      console.error("Error signing up:", error.message);
+        // Create user document in firestore
+        await setDoc(doc(db, "users", res.user.uid), {
+          uid: res.user.uid,
+          username,
+          email,
+          // photoURL: downloadURL, // Photo URL can be added if needed
+        });
+
+        // Create empty user chats document in firestore
+        await setDoc(doc(db, "userChats", res.user.uid), {});
+
+        // Navigate to the sign-in page after successful signup
+        navigate("/signin");
+
+        // catch error when writing to database
+      } catch (err) {
+        console.log(err);
+        setErr(true); 
+        setLoading(false); 
+      }
+
+      // catch errors with attempting to create an user account
+    } catch (err) {
+      setErr(true); 
+      setLoading(false); 
     }
-  }
-
+  };
   // Enable/disable the sign-up button based on form inputs and checkbox status
   const isSignUpDisabled = !isChecked || !email || !password || !username;
 
@@ -51,37 +77,39 @@ function SignUp() {
       {/* Title for the sign-up form */}
       <h1>Sign Up</h1>
       {/* Sign-up form */}
-      <form>
+      <form onSubmit={handleSubmit}>
         {/* Input field for username */}
         <div className="txt-field">
           <input
-            type="text"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
             required
+            type="text"
+            placeholder="Username"
+            onChange={(e) => setUsername(e.target.value)} // Add onChange for username
           />
-          <label>Username:</label>
+          <label>Username</label>
         </div>
         {/* Input field for email */}
         <div className="txt-field">
           <input
-            type="text"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
             required
-          /> {/* end of txt-field */}
-          <label>Email:</label>
-        </div> 
+            type="text" // Fix type to "email"
+            placeholder="Email"
+            onChange={(e) => setEmail(e.target.value)} // Add onChange for email
+          />
+          {/* end of txt-field */}
+          <label>Email</label>
+        </div>
         {/* Input field for password */}
         <div className="txt-field">
           <input
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
             required
+            type="password"
+            placeholder="Password"
+            onChange={(e) => setPassword(e.target.value)} // Add onChange for password
           />
-          <label>Password:</label>
-        </div> {/* end of txt-field */}
+          <label>Password</label>
+        </div>{" "}
+        {/* end of txt-field */}
         {/* Checkbox to agree to Terms of Service */}
         <div className="signup-link">
           <label>
@@ -94,19 +122,15 @@ function SignUp() {
             I have read and agree to KS222 Dynamic Chat App's{" "}
             <Link to="/TOS">Terms of Service</Link>
           </label>
-        </div> {/* end of signup-link */}
+        </div>{" "}
+        {/* end of signup-link */}
         {/* Button for submitting the sign-up form */}
-        <button
-          type="submit"
-          onClick={handleSignUp} // Calls handleSignUp function on button click
-          disabled={isSignUpDisabled} // Disables the button based on isSignUpDisabled state
-        >
-          Sign Up
-        </button>
+        <button disabled={isSignUpDisabled}>Sign up</button>
         {/* Link to the sign-in page */}
         <div className="signup-link">
           Already have an account? <Link to="/signin">Sign In</Link>
-        </div> {/* end of signup-link*/}
+        </div>{" "}
+        {/* end of signup-link*/}
       </form>
     </div> // end of center
   );

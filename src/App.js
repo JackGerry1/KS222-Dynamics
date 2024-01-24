@@ -1,35 +1,32 @@
 // App.js
 
 // import the relevent react dependices alongside all of the page components
-import React, { useState, useEffect } from "react";
-import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
-import { onAuthStateChanged } from "firebase/auth";
-import { auth } from "./firebase";
-import "./App.css";
+import React, { useContext } from "react";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import { AuthContext } from "./context/AuthContext";
+import "./styles/index.css";
 import SignIn from "./Pages/SignIn";
 import SignUp from "./Pages/SignUp";
 import Home from "./Pages/Home";
-import Chat from "./Chat";
+import Chatpage from "./Pages/Chatpage";
 import TOS from "./Pages/TOS";
-import Settings from "./Pages/Settings";
-
+import Settings from "./components/Settings";
 
 function App() {
   // create a unautorised user to start with
-  const [user, setUser] = useState(null);
+  const { currentUser } = useContext(AuthContext);
 
-  useEffect(() => {
-    // Subscribe to changes in authentication state
-    const unsubscribe = onAuthStateChanged(auth, (authUser) => {
-      setUser(authUser); // Update user state with the authenticated user
-    });
+  // if the user has not logged redirect them back to signin page
+  const ProtectedRoute = ({ children }) => {
+    if (!currentUser) {
+      return <Navigate to="/signin" />;
+    }
 
-    // Unsubscribe when component unmounts
-    return () => unsubscribe();
-  }, []);
+    return children;
+  };
 
   return (
-    <Router>
+    <BrowserRouter>
       <div className="App">
         <Routes>
           {/* Default route leads to Home */}
@@ -44,35 +41,30 @@ function App() {
           {/* Route for TOS page */}
           <Route path="/TOS" element={<TOS />} />
 
-          {/* Route for Chat page with conditional rendering based on authentication */}
+          {/* Route for chat page with conditional rendering based on authentication */}
           <Route
-            path="/chat"
+            path="/chatpage"
             element={
-              user ? (
-                <Chat user={user} />
-              ) : (
-                <Navigate to="/signin" />
-              )
+              <ProtectedRoute>
+                <Chatpage />
+              </ProtectedRoute>
             }
           />
 
           {/* Route for Settings page with conditional rendering based on authentication */}
           <Route
-            path="/Settings"
+            path="/settings"
             element={
-              user ? (
-                <Settings user={user} />
-              ) : (
-                <Navigate to="/signin" />
-              )
+              <ProtectedRoute>
+                <Settings />
+              </ProtectedRoute>
             }
           />
-        </Routes>
+        </Routes> 
       </div>
-    </Router>
+    </BrowserRouter>
   );
 }
 
 // Exporting the App component as default
 export default App;
-

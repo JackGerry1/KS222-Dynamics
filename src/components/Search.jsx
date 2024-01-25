@@ -17,11 +17,10 @@ import { AuthContext } from "../context/AuthContext";
 import { ChatContext } from "../context/ChatContext";
 import { db } from "../firebase";
 
-// function to handle Search Component
 const Search = () => {
   // State variables to manage username input, found user data, and error state
   const [username, setUsername] = useState("");
-  const [user, setUser] = useState(null);
+  const [users, setUsers] = useState([]);
   const [err, setErr] = useState(false);
 
   // Context variables for current user and chat context dispatch function
@@ -38,19 +37,28 @@ const Search = () => {
         where("username", "==", username),
         where("uid", "!=", currentUser.uid)
       );
-
       // Execute the query
       const querySnapshot = await getDocs(q);
 
+      // Initialize an array to store found users
+      const foundUsers = [];
+
       // Check if any users are found
       if (!querySnapshot.empty) {
-        // Retrieve the first user's data
-        const userData = querySnapshot.docs[0].data();
-        setUser(userData);
+        // Retrieve and log data for each user with the specified username
+        querySnapshot.docs.forEach((doc) => {
+          const userData = doc.data();
+
+          // Add the retrieved user data to the array
+          foundUsers.push(userData);
+        });
+
+        // Set the users state with the array of found users and reset error state
+        setUsers(foundUsers);
         setErr(false);
       } else {
         // Reset user data and set an error if no user is found
-        setUser(null);
+        setUsers([]);
         setErr(true);
       }
 
@@ -67,9 +75,9 @@ const Search = () => {
   };
 
   // Function to handle the selection of a user for initiating a chat
-  const handleSelect = async () => {
+  const handleSelect = async (selectedUser) => {
     // Ensure the selected user is not the current user
-    if (user.uid === currentUser.uid) {
+    if (selectedUser.uid === currentUser.uid) {
       // Display an error or handle the case where the user is trying to chat with themselves
       console.error("Cannot create a chat with yourself!");
       return;
@@ -77,16 +85,16 @@ const Search = () => {
 
     // Check whether the group (chats in firestore) exists, if not create
     const combinedId =
-      currentUser.uid > user.uid
-        ? currentUser.uid + user.uid
-        : user.uid + currentUser.uid;
+      currentUser.uid > selectedUser.uid
+        ? currentUser.uid + selectedUser.uid
+        : selectedUser.uid + currentUser.uid;
     try {
       // Check if the chat document already exists if it does just get it
       const res = await getDoc(doc(db, "chats", combinedId));
 
       // if it does not exist
       if (!res.exists()) {
-        // Create a chat in the "chats" collection, which will start as empt
+        // Create a chat in the "chats" collection, which will start as empty
         await setDoc(doc(db, "chats", combinedId), { messages: [] });
 
         /* 
@@ -103,14 +111,14 @@ const Search = () => {
         // Update user chats for current user
         await updateDoc(doc(db, "userChats", currentUser.uid), {
           [combinedId + ".userInfo"]: {
-            uid: user.uid,
-            username: user.username,
+            uid: selectedUser.uid,
+            username: selectedUser.username,
           },
           [combinedId + ".date"]: serverTimestamp(),
         });
 
         // Update user chats for selected user
-        await updateDoc(doc(db, "userChats", user.uid), {
+        await updateDoc(doc(db, "userChats", selectedUser.uid), {
           [combinedId + ".userInfo"]: {
             uid: currentUser.uid,
             username: currentUser.displayName,
@@ -122,7 +130,7 @@ const Search = () => {
       // Set user information in the context
       // this is so that when the user clicks on the user they want to chat one is created
       // or they are taken to where their chat was left off
-      dispatch({ type: "CHANGE_USER", payload: user });
+      dispatch({ type: "CHANGE_USER", payload: selectedUser });
 
       // catch any errors in this process
     } catch (err) {
@@ -132,7 +140,7 @@ const Search = () => {
     // Reset user data and username input
     // this is just clearing the search field after a user has
     // clicked the user they want to chat with
-    setUser(null);
+    setUsers([]);
     setUsername("");
   };
 
@@ -149,26 +157,33 @@ const Search = () => {
           onChange={(e) => setUsername(e.target.value)}
           value={username}
         />
-      </div> {/* end of searchForm */}
-
+      </div>{" "}
+      {/* end of searchForm */}
       {/* Display an error message if the user is not found */}
       {err && <span className="error-message">User not found!</span>}
-
-      {/* Display the found user if available */}
-      {user && (
-        <div className="userChat" onClick={handleSelect}>
-          {/* Placeholder for user's profile image */}
-          <img src="" alt="" />
-          <div className="userChatInfo">
-            {/* Display the found user's username */}
-            <span>{user.username}</span>
-          </div> {/* end of userChatInfo */} 
-        </div> // end of userChat
+      {/* Display the found users if available */}
+      {users.length > 0 && (
+        // go through every user found in userData and output put them
+        <div className="userList">
+          {users.map((userData) => (
+            <div
+              key={userData.uid}
+              className="userChat"
+              onClick={() => handleSelect(userData)}
+            >
+              {/* Placeholder for user's profile image */}
+              <img src="" alt="" />
+              <div className="userChatInfo">
+                {/* Display the found users */}
+                <span>{userData.username}</span>
+              </div>{/* end of userChatInfo */}
+            </div> // end of userChat
+          ))}
+        </div> // end of userList
       )}
     </div> // end of search
   );
 };
-
 
 // Exporting the Search component as default
 export default Search;

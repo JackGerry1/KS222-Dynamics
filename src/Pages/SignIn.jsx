@@ -136,7 +136,7 @@ function SignIn() {
         Sign In with Google
         </button>
         {/* ReCAPTCHA entry box */}
-        <ReCAPTCHA sitekey="6Le1HzYfAAAAAP9SdeuzJ7GDta-hWegd8lpABac1" onChange={handleReCAPTCHAChange} />
+        <ReCAPTCHA sitekey="???????" onChange={handleReCAPTCHAChange} />
         {/* ReCAPTCHA error message displayed if ReCAPTCHA not completed*/}
         {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>}
 

@@ -1,52 +1,99 @@
-// src/Pages/Settings.js
-
-// Settings.jsx with the releavent react includes and the css files
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import "../styles/Settings.css";
+import { getAuth, deleteUser } from "firebase/auth"; // for delete profile
+//import { getAuth, updateProfile } from "firebase/auth";
+//import { db } from "../firebase";
 
-// function to handle the settings page
 const Settings = ({ user }) => {
   // State for toggling the settings visibility
   const [showSettings, setShowSettings] = useState(true);
+  //const [newDisplayName, setNewDisplayName] = useState("");
+  const [error] = useState(null);
 
-  // function for the close buttons
+  // Function for handling the closing of the settings modal
   const handleSettingsClose = () => {
-    // Hide the settings component
     setShowSettings(false);
-    // Go back to the previous page using browser history
     window.history.back();
   };
 
   // Hide settings when not active
   if (!showSettings) return null;
 
+  // Function to change the display name - WORKING PROGRESS
+  /*
+  const changeDisplayName = async (newDisplayName) => {
+    try {
+      // Check if the user is logged in
+      const user = getAuth().currentUser;
+  
+      if (user) {
+        // User is logged in, update display name
+        await updateProfile(user, {
+          displayName: newDisplayName
+        });
+  
+        // Update display name in Firestore
+        await db.collection("users").doc(user.uid).update({
+          displayName: newDisplayName
+        });
+  
+        console.log("Display name updated successfully");
+      } else {
+        // User is not logged in
+        console.error("No user signed in");
+        setError("No user signed in");
+      }
+    } catch (error) {
+      console.error("Error updating display name:", error);
+      setError(error.message);
+    }
+  };*/
+  
+
+  // DELETE ACCOUNT
+  const handleDeleteAccount = async () => {
+    const auth = getAuth();
+    const user = auth.currentUser;
+
+    try {
+      if (user) {
+        await deleteUser(user);
+        console.log("User account deleted successfully");
+      } else {
+        console.error("No user signed in");
+      }
+    } catch (error) {
+      console.error("Error deleting user account:", error.message);
+    }
+  };
+
   return (
-    // Modal container so it popups instead of redirecting to a new page
-    <div class="modal">
+    // Modal container so it pops up instead of redirecting to a new page
+    <div className="modal">
       {/* Content inside the modal is the settings page*/}
-      <div class="modal-content">
+      <div className="modal-content">
         {/* Container for the close button */}
-        <div class="close-button">
+        <div className="close-button">
           <Link onClick={handleSettingsClose}>
             {/* Link wrapper for triggering the close action */}
-            <span class="close-icon">&times;</span>
+            <span className="close-icon">&times;</span>
 
             {/* Text representation of the 'ESC' key/symbol */}
-            <span class="close-text">ESC</span>
+            <span className="close-text">ESC</span>
           </Link>
         </div>{" "}
         {/* end of close-button */}
         {/* Form for user settings */}
         <h2>Settings</h2>
-        <form class="settings-form">
+        <form className="settings-form">
           {/* Column container for settings */}
-          <div class="column">
+          <div className="column">
             {/* Subtitle for the account settings */}
             <h3>Account Settings</h3>
             <label htmlFor="profilePic">Profile Picture:</label>
             {/* Label for profile picture input */}
-            <div class="profile-picture">
+            <div className="profile-picture">
               {/* Container for profile picture */}
               <input
                 type="file"
@@ -57,16 +104,24 @@ const Settings = ({ user }) => {
               {/* end of profile picture */}
             </div>{" "}
             {/* end of column */}
-            <label for="displayName">Display Name:</label>
+            <label htmlFor="displayName">Display Name:</label>
             {/* Label for display name input with text type and placeholder text*/}
             <input
               type="text"
               id="displayName"
               name="displayName"
               placeholder="Change your display name"
+              /*value={newDisplayName}
+              onChange={(e) => setNewDisplayName(e.target.value)}*/
             />
-            {/* Label for email input with emaile type and placeholder text*/}
-            <label for="email">Email:</label>
+            
+            {/* Button to change display name */}
+            <button /*onClick={() => changeDisplayName(newDisplayName)}*/>
+              Change Display Name
+            </button>
+            {error && <p className="error-message">{error}</p>}
+            {/* Label for email input with email type and placeholder text*/}
+            <label htmlFor="email">Email:</label>
             <input
               type="email"
               id="email"
@@ -75,59 +130,59 @@ const Settings = ({ user }) => {
             />
             {/* Title for the change password section */}
             <h3>Change Password</h3>
-            <label for="password">Current Password:</label>
+            <label htmlFor="currentPassword">Current Password:</label>
             {/* Label for current password input with type password and placeholder*/}
             <input
               type="password"
-              id="password"
-              name="password"
+              id="currentPassword"
+              name="currentPassword"
               placeholder="Enter Current Password"
             />
-            <label for="password">New Password:</label>
+            <label htmlFor="newPassword">New Password:</label>
             {/* Label for new password input */}
             <input
               type="password"
-              id="password"
-              name="password"
+              id="newPassword"
+              name="newPassword"
               placeholder="Enter New Password"
             />
             {/* Label for confirming new password input type password and placeholder*/}
-            <label for="password">Confirm New Password:</label>
+            <label htmlFor="confirmNewPassword">Confirm New Password:</label>
             <input
               type="password"
-              id="password"
-              name="password"
+              id="confirmNewPassword"
+              name="confirmNewPassword"
               placeholder="Confirm New Password"
             />
             {/* Change Password Button */}
             <div className="settings-content">
-              <button class="change-button">Change Password</button>
+              <button className="change-button">Change Password</button>
             </div>{" "}
             {/* end of settings-content */}
           </div>{" "}
           {/* end of column */}
         </form>{" "}
         {/* end of settings-form */}
-        <form class="settings-form">
-          <div class="column">
+        <form className="settings-form">
+          <div className="column">
             {/* Subtitle for the danger zone */}
             <h3>Danger Zone</h3>
             {/* Delete Account */}
             <div className="settings-content">
-              <button class="delete-account-button">Delete Account</button>
+            <button className="delete-account-button" onClick={handleDeleteAccount}>Delete Account</button>
             </div>
             {/* end of settings-content */}
           </div>
           {/* end of column */}
         </form>
         {/* end of settings-form */}
-        <form class="settings-form">
+        <form className="settings-form">
           {/* Form for privacy settings */}
-          <div class="column">
+          <div className="column">
             {/* Column wrapper */}
             <h3>Privacy Settings</h3> {/* Title for privacy settings section */}
             {/* Dropdown to control who can contact */}
-            <label for="contactControl">Control Who Can Contact You:</label>
+            <label htmlFor="contactControl">Control Who Can Contact You:</label>
             <select id="contactControl" name="contactControl">
               {/* Option for allowing everyone to contact */}
               <option value="everyone">Everyone</option>
@@ -139,7 +194,7 @@ const Settings = ({ user }) => {
               <option value="none">No One</option>
             </select>
             {/* Dropdown for status visibility */}
-            <label for="statusVisibility">Status Visibility:</label>
+            <label htmlFor="statusVisibility">Status Visibility:</label>
             <select id="statusVisibility" name="statusVisibility">
               {/* Option for status visible to all */}
               <option value="visible">Visible to All</option>
@@ -151,8 +206,8 @@ const Settings = ({ user }) => {
               <option value="hidden">Hidden</option>
             </select>
             {/* Dropdown for setting status message */}
-            <label for="statusMessage">Status Message:</label>
-            <select id="statusVisibility" name="statusVisibility">
+            <label htmlFor="statusMessage">Status Message:</label>
+            <select id="statusMessage" name="statusMessage">
               {/* Option for online status */}
               <option value="Online">Online</option>
 
@@ -190,7 +245,7 @@ const Settings = ({ user }) => {
             {/* Content wrapper */}
             <div className="settings-content">
               {/* Button to save changes */}
-              <button class="change-button" onClick={handleSettingsClose}>
+              <button className="change-button" onClick={handleSettingsClose}>
                 Save Changes
               </button>
             </div>{" "}
@@ -201,9 +256,8 @@ const Settings = ({ user }) => {
         {/* end of settings-form */}
       </div>{" "}
       {/* end of modal-content */}
-    </div> // end of modal
+    </div>
   );
 };
 
-// Exporting the Settings component as default
 export default Settings;

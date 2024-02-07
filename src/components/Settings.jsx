@@ -4,9 +4,14 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import "../styles/Settings.css";
+import { changePageTitle } from "../components/Title";
 
 // function to handle the settings page
 const Settings = ({ user }) => {
+
+  // Update page title
+  changePageTitle('KS222-Settings');
+
   // State for toggling the settings visibility
   const [showSettings, setShowSettings] = useState(true);
 

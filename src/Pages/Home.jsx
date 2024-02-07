@@ -4,9 +4,13 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import logoImage from "../Assets/Logo.png";
+import { changePageTitle } from "../components/Title";
 
 // Functional component for the Home page
 const Home = () => {
+  // Update page title
+  changePageTitle('KS222-Dynamics');
+  
   return (
     <div>
       <div className="center-container">

@@ -9,7 +9,7 @@ import {
   GoogleAuthProvider,
 } from "firebase/auth";
 import { auth, db } from "../firebase";
-import { doc, setDoc } from "firebase/firestore";
+import { doc, setDoc, getDoc } from "firebase/firestore";
 import logoImage from "../Assets/Logo1.png";
 import ReCAPTCHA from "react-google-recaptcha";
 import GoogleButton from "react-google-button";
@@ -45,7 +45,11 @@ function SignIn() {
 
       // Attempt sign-in using Firebase auth with provided email and password
       await signInWithEmailAndPassword(auth, email, password);
-
+      
+      // Log user data to the console
+      const currentUser = auth.currentUser;
+      console.log("Logged-in User Data:", currentUser);
+      
       // If successful, navigate to the chat page or any other desired location
       navigate("/chatpage");
     } catch (error) {
@@ -62,6 +66,7 @@ function SignIn() {
         setErrorMessage("Please complete the ReCAPTCHA.");
         return; // Prevent sign-in if ReCAPTCHA token is not available
       }
+
       // Create a GoogleAuthProvider instance
       const googleProvider = new GoogleAuthProvider();
 
@@ -69,17 +74,24 @@ function SignIn() {
       const result = await signInWithPopup(auth, googleProvider);
       const user = result.user;
 
-      // Create or update user document in Firestore
-      const userDocRef = doc(db, "users", user.uid);
-      await setDoc(userDocRef, {
-        uid: user.uid,
-        username: user.displayName, // Use Google display name as username
-        email: user.email,
-        // photoURL: user.photoURL, // Photo URL can be added if needed
-      });
+      // create variables to check the current state of the userChats 
+      // for the Gmail user signing in
+      const userChatsDocRef = doc(db, "userChats", user.uid);
+      const userChatsDocSnapshot = await getDoc(userChatsDocRef);
 
-      // Create empty user chats document in firestore
-      await setDoc(doc(db, "userChats", user.uid), {});
+      // Create user and empty userChats document in Firestore if one doesn't exist already
+      // this prevents it from erasing the chats of an already existing Gmail user
+      if (!userChatsDocSnapshot.exists()) {
+        const userDocRef = doc(db, "users", user.uid);
+        await setDoc(userDocRef, {
+          uid: user.uid,
+          username: user.displayName,
+          email: user.email,
+        });
+
+        // Create empty userChats document in Firestore
+        await setDoc(userChatsDocRef, {});
+      }
       // Navigate to the chat page after successful signing up with google account credentials
       navigate("/chatpage");
     } catch (error) {

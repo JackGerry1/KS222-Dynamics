@@ -3,9 +3,12 @@ import React from "react";
 import Sidebar from "../components/Sidebar"; 
 import Chat from "../components/Chat"; 
 import "../styles/Chat.css"; 
+import { changePageTitle } from "../components/Title";
 
 // Functional component for the Chat page
 const Chatpage = () => {
+  // Update page title
+  changePageTitle('KS222-Chat');
   // Return JSX for rendering the Chat page
   return (
    // Root container for the Chat page */  

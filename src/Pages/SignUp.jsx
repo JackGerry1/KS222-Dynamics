@@ -8,6 +8,7 @@ import { auth, db } from "../firebase";
 import { doc, setDoc } from "firebase/firestore";
 import { useNavigate, Link } from "react-router-dom";
 import logoImage from "../Assets/Logo1.png";
+import { changePageTitle } from "../components/Title";
 
 // Function to handle for signup page
 function SignUp() {
@@ -65,6 +66,8 @@ function SignUp() {
   };
   // Enable/disable the sign-up button based on form inputs and checkbox status
   const isSignUpDisabled = !isChecked || !email || !password || !username;
+  // Update page title
+  changePageTitle('KS222-SignUp');
 
   return (
     // Container div with a "center" class to center the content

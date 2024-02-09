@@ -6,9 +6,12 @@ import React from "react";
 import { Link } from "react-router-dom";
 import "../styles/index.css";
 import "../styles/TOS.css";
+import { changePageTitle } from "../components/Title";
 
 // render the TOS page with all the HTML content
 const TOS = () => {
+  // Update page title
+  changePageTitle('KS222-TOS');
   return (
     <div className="page-container">
       <div className="terms-box">

@@ -13,6 +13,7 @@ import { doc, setDoc, getDoc } from "firebase/firestore";
 import logoImage from "../Assets/Logo1.png";
 import ReCAPTCHA from "react-google-recaptcha";
 import GoogleButton from "react-google-button";
+import { changePageTitle } from "../components/Title";
 
 // Function to handle for signup page
 function SignIn() {
@@ -55,6 +56,7 @@ function SignIn() {
     } catch (error) {
       // Handle sign-in error, log the error message to the console
       console.error("Error signing in:", error.message);
+      setErrorMessage("Invalid Credentials.");
     }
   };
   // Function to handle sign-in with Google account
@@ -106,6 +108,8 @@ function SignIn() {
     // The token has to be set to allow the user to login
     setReCAPTCHAToken(token);
   };
+  // Update page title
+  changePageTitle('KS222-SignIn');
 
   return (
     <div className="center">
@@ -149,16 +153,22 @@ function SignIn() {
           Sign In
         </button>
         {/* Additional Google Sign-in button */}
-        <GoogleButton onClick={handleGoogleSignIn}>
-          Sign In with Google
-        </GoogleButton>
+        <div className="buttoncontainer">
+          <GoogleButton onClick={handleGoogleSignIn}>
+            Sign In with Google
+            </GoogleButton>
+        </div>
         {/* ReCAPTCHA entry box */}
+        <div className="buttoncontainer">
         <ReCAPTCHA
           sitekey="6Le1HzYfAAAAAP9SdeuzJ7GDta-hWegd8lpABac1"
           onChange={handleReCAPTCHAChange}
         />
-        {/* ReCAPTCHA error message displayed if ReCAPTCHA not completed*/}
-        {errorMessage && <p style={{ color: "red" }}>{errorMessage}</p>}
+        </div>
+        {/* Error message displayed if ReCAPTCHA not completed or incorrect credentials entered*/}
+        <div className="errorMessage">
+        {errorMessage && <p>{errorMessage}</p>}
+        </div>
         {/* Link to the signup page */}
         <div className="signup-link">
           Don't have an account? <Link to="/signup">Sign Up</Link>

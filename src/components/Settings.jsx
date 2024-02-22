@@ -5,6 +5,7 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import "../styles/Settings.css";
 import { changePageTitle } from "../components/Title";
+import ProfilePicture from "./ProfilePicture";
 
 // function to handle the settings page
 const Settings = ({ user }) => {
@@ -49,19 +50,7 @@ const Settings = ({ user }) => {
           <div class="column">
             {/* Subtitle for the account settings */}
             <h3>Account Settings</h3>
-            <label htmlFor="profilePic">Profile Picture:</label>
-            {/* Label for profile picture input */}
-            <div class="profile-picture">
-              {/* Container for profile picture */}
-              <input
-                type="file"
-                id="profilePic"
-                name="profilePic"
-                accept="image/*"
-              />
-              {/* end of profile picture */}
-            </div>{" "}
-            {/* end of column */}
+            <ProfilePicture />
             <label for="displayName">Display Name:</label>
             {/* Label for display name input with text type and placeholder text*/}
             <input

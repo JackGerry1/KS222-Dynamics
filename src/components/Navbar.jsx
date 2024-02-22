@@ -38,7 +38,7 @@ const Navbar = () => {
       {/* User section with display name, profile picture, and logout button */}
       <div className="user">
         {/* OPTIONAL TODO: user profile picture displayed here, something like {currentUser.profilePic} */}
-        <img src="" alt="" />
+        <img src={currentUser.photoURL} alt="Avatar" className="avatar"/>
 
         {/* Display the user's name */}
         <span style={{ marginTop: "5px" }}>{currentUser.displayName}</span>

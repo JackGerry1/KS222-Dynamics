@@ -113,6 +113,7 @@ const Search = () => {
           [combinedId + ".userInfo"]: {
             uid: selectedUser.uid,
             username: selectedUser.username,
+            photoURL: selectedUser.photoURL
           },
           [combinedId + ".date"]: serverTimestamp(),
         });
@@ -122,6 +123,7 @@ const Search = () => {
           [combinedId + ".userInfo"]: {
             uid: currentUser.uid,
             username: currentUser.displayName,
+            photoURL: currentUser.photoURL,
           },
           [combinedId + ".date"]: serverTimestamp(),
         });
@@ -172,7 +174,7 @@ const Search = () => {
               onClick={() => handleSelect(userData)}
             >
               {/* Placeholder for user's profile image */}
-              <img src="" alt="" />
+              <img src={userData.photoURL} alt="" />
               <div className="userChatInfo">
                 {/* Display the found users */}
                 <span>{userData.username}</span>

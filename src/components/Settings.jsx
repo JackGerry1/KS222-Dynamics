@@ -50,7 +50,11 @@ const Settings = ({ user }) => {
           <div class="column">
             {/* Subtitle for the account settings */}
             <h3>Account Settings</h3>
-            <ProfilePicture />
+            <p>Configure your account preferences below.</p>
+            <h3>Profile Picture</h3>
+            {/* Label for Profile Picture and placeholder text*/}
+            <label for="profilePicture">Change Profile Picture: </label>
+            <ProfilePicture /> {/* Calling Profile Picture Component */}
             <label for="displayName">Display Name:</label>
             {/* Label for display name input with text type and placeholder text*/}
             <input

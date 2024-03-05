@@ -4,6 +4,8 @@
 import React, { useContext, useEffect, useRef } from "react";
 import { AuthContext } from "../context/AuthContext";
 import { ChatContext } from "../context/ChatContext";
+import profileDefault from "../Assets/profileDefault.png";
+import { Link } from "react-router-dom";
 
 // Function to format the timestamp into the UK format
 const formatDate = (timestamp) => {
@@ -47,9 +49,15 @@ const Message = ({ message }) => {
       {/* display the message info */}
       <div className="messageInfo">
         {/* Placeholder image for the sender */}
-        <img src="" alt="" />
+        <Link to="/">
+          {/* Default Profile */}
+          {/* <img src={profileDefault} alt="Profile" className="Profile-Default" /> */}
+        </Link>
         <div className="infoContent">
           {/* Displaying the sender's name */}
+          <img src={message.senderId === currentUser.uid
+              ? currentUser.photoURL
+              : data.user.photoURL} alt="" />
           <span>
             {message.senderId === currentUser.uid
               ? currentUser.displayName

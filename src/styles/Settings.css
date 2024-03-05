@@ -177,58 +177,30 @@
   transition: background-color 0.3s; /* Smooth background color transition */
 }
 
-/* Styles for the profile picture container */
-.profile-picture {
-  display: flex;
-  align-items: center;
+/* Stacking and ddding spacing between profile upload items */
+
+.profilepicture {
+  flex-direction: column; 
+  align-items: start; 
 }
 
-/* Styling for the circular profile picture */
-.profile-picture::before {
-  content: ""; /* Pseudo-element for the circular shape */
-  display: block;
-  width: 40px; /* Diameter of the circle */
-  height: 40px; /* Diameter of the circle */
-  border-radius: 50%; /* Circle shape */
-  background-color: #043199;
-  margin-right: 10px;
+.chooseFile {
+  margin-top: 20px;
+  margin-bottom: 20px; 
 }
 
-/* Change background color on hover for the close icon */
-.close-icon:hover {
-  background-color: #c9c3c3;
+.upload {
+  margin-bottom: 20px; 
 }
 
-/* Styling for the close text */
-.close-text {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-top: 5px;
-  font-weight: bold;
-  color: #000;
+.profilePictureSettings {
+margin-bottom: 20px;
 }
 
-/* Styles for the fixed-bottom element */
-.fixed-bottom {
-  position: fixed;
-  bottom: 8vb;
-  width: 100%;
-  display: flex;
-  justify-content: center;
-}
-
-/* Styling for form rows */
-.form-row {
-  display: flex;
-  align-items: center;
-  margin-bottom: 10px;
-}
-
-/* Styles for profile picture image preview */
 .avatar {
   vertical-align: middle;
   width: 80px;
   height: 80px;
+  /* border-radius: 50%; /* Circular shape optional */
 }
 

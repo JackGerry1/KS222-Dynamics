@@ -1,0 +1,34 @@
+.toggle-container {
+  position: absolute;
+  top: 2em;
+  right: 2em;
+}
+
+/* Hide the checkbox */
+.toggle {
+  display: none;
+}
+
+/* Hide the label's pseudo-elements */
+.toggle + label::before,
+.toggle + label::after {
+  display: none;
+}
+
+/* Style the label */
+.toggle + label {
+  cursor: pointer;
+  transition: transform 0.3s ease-in-out;
+}
+
+/* Style the images */
+.toggle + label img {
+  width: 64px; /* Adjust width as needed */
+  height: auto; /* Maintain aspect ratio */
+  transition: transform 0.3s ease-in-out; /* Smooth transition */
+}
+
+/* Hover effect */
+.toggle + label img:hover {
+  transform: scale(1.2); /* Increase size on hover */
+}

@@ -21,17 +21,16 @@ const FooterSidebar = () => {
             className="settings-logo"
           />
         </Link>
-        
         {/* Regular image without a link */}
         <Link>
           {/* FAQ icon image */}
           <img src={FAQIcon} alt="FAQIcon" className="settings-logo" />
         </Link>
-      </div> {/* end of footer-content */}
-    </div> // end of footer 
+      </div>{" "}
+      {/* end of footer-content */}
+    </div> // end of footer
   );
 };
 
 // Exporting the FooterSidebar component as default
 export default FooterSidebar;
-

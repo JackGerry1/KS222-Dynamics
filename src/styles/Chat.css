@@ -156,7 +156,7 @@
 
 /* Styles for the messages section within the chat container */
 .chatpage .container .chat .messages {
-  background-color: #ddddf7;
+  background-color: var(--chatpage-container-bg);
   padding: 10px;
   height: calc(100% - 100px);
   overflow: scroll;
@@ -169,6 +169,7 @@
   align-items: center;
   height: 100%;
   font-size: 44px;
+  color: var(--center-h1-text);
 }
 
 /* Styles for an individual message container within the chat */
@@ -199,7 +200,7 @@
 .chatpage .container .chat .messages .message .messageInfo .infoContent {
   display: flex;
   flex-direction: column;
-  color: black;
+  color: var(--sender-info);
   font-weight: 300;
 }
 
@@ -219,7 +220,8 @@
 
 /* Styles for the paragraph element within a message content */
 .chatpage .container .chat .messages .message .messageContent p {
-  background-color: white;
+  background-color: var(--received-message-bg);
+  color: var(--received-message-text);
   padding: 10px 20px;
   border-radius: 0px 10px 10px 10px;
   max-width: max-content;
@@ -245,7 +247,7 @@
 /* Styles for the input section at the bottom of the chat */
 .chatpage .container .chat .input {
   height: 50px;
-  background-color: white;
+  background-color: var(--chatpage-input-bg);
   padding: 10px;
   display: flex;
   align-items: center;
@@ -257,13 +259,14 @@
   width: 100%;
   border: none;
   outline: none;
-  color: black;
+  background-color: var(--chatpage-input-bg);
+  color: var(--chatpage-input-text);
   font-size: 18px;
 }
 
 /* Styles for the placeholder text within the input element */
 .chatpage .container .chat .input input::placeholder {
-  color: black;
+  color: var(--chatpage-input-text);
 }
 
 /* Styles for the send button container within the input section */

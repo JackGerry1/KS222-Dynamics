@@ -2,16 +2,25 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import  DeleteConfirmation  from "./DeleteConfirmationPopUp";
 import "../styles/Settings.css";
-import { getAuth, deleteUser, updateProfile } from "firebase/auth";
+import { getAuth, deleteUser, updateProfile, updatePassword, updateEmail } from "firebase/auth";
 import { db } from "../firebase";
-import { doc, setDoc, deleteDoc } from "firebase/firestore";
+import { doc, deleteDoc, updateDoc } from "firebase/firestore";
 import { changePageTitle } from "../components/Title";
 
 const Settings = ({ user }) => {
   // State for toggling the settings visibility
   const [showSettings, setShowSettings] = useState(true);
   const [newDisplayName, setNewDisplayName] = useState("");
-  const [error] = useState("");
+  const [newEmail, setNewEmail] = useState("");
+  const [newPassword, setNewPassword] = useState("");
+  const auth = getAuth();
+  const userInfo = auth.currentUser;
+
+  // Variables for displaying errors
+  const [displayNameError, setDisplayNameError] = useState("");
+  const [emailError, setEmailError] = useState("");
+  const [passwordError, setPasswordError] = useState("");
+  const [deleteAccError, setDeleteAccError] = useState("");
 
   changePageTitle("KS222-Settings");
 
@@ -27,16 +36,9 @@ const Settings = ({ user }) => {
   // Function to change the display name
   const changeDisplayName = async (newDisplayName) => {
     // Check if the user is logged in
-    const auth = getAuth();
     const user = auth.currentUser;
     try {
         if (user) {
-            // Fetch user's email
-            const userEmail = user.email;
-
-            // Delete existing document
-            await deleteDoc(doc(db, "users", user.uid));
-            console.log("Deleted old user document from Firestore");
 
             // Update user profile display name
             await updateProfile(user, {
@@ -44,23 +46,19 @@ const Settings = ({ user }) => {
             });
             console.log("Updated user profile display name");
 
-            await setDoc(doc(db, "users", user.uid), {
-                uid: user.uid,
+            await updateDoc(doc(db, "users", user.uid), {
                 username: newDisplayName,
-                email: userEmail,
             });
-            console.log("Created new user document in Firestore");
+            console.log("Updated user document in Firestore");
         }
     } catch (error) {
         console.error("Error occurred while updating user data:", error);
+        setDisplayNameError("There was an error when changing display name.");
     }
 };
 
-  
-
   // DELETE ACCOUNT
   const handleDeleteAccount = async () => {
-    const auth = getAuth();
     const user = auth.currentUser;
 
     try {
@@ -74,9 +72,44 @@ const Settings = ({ user }) => {
       }
     } catch (error) {
       console.error("Error deleting user account:", error.message);
-      
+      setDeleteAccError("There was an error while deleting account.");
     }
   };
+
+  // Change password
+  const handleChangePassword = async () => {
+    const user = auth.currentUser;
+
+    try {
+      if (user) {
+        await updatePassword(userInfo, newPassword);
+        console.log("Password changed successfully");
+      } else {
+        console.error("No user signed in");
+        setPasswordError("There was an error while changing password.");
+      }
+    } catch (error) {
+      console.error("Error changing password:", error.message);
+      setPasswordError("There was an error while changing password.");
+    }
+  };
+
+  // Change email
+const handleChangeEmail = async () => {
+  const user = auth.currentUser;
+
+  try {
+    if (user) {
+      await updateEmail(user, newEmail);
+      console.log("Email changed successfully");
+    } else {
+      console.error("No user signed in");
+    }
+  } catch (error) {
+    console.error("Error changing email:", error.message);
+    setEmailError("There was an error while changing email.");
+  }
+};
 
   return (
     // Modal container so it pops up instead of redirecting to a new page
@@ -125,30 +158,32 @@ const Settings = ({ user }) => {
                 placeholder="Enter new display name"
                 value={newDisplayName}
                 onChange={(e) => setNewDisplayName(e.target.value)}
+                required
               />
-              <button onClick={() => changeDisplayName(newDisplayName)}>
+              <button className="change-button" onClick={() => changeDisplayName(newDisplayName)}>
                 Change Display Name
               </button>
-              {error && <p className="error-message">{error}</p>}
+              {displayNameError && <p className="error-message">{displayNameError}</p>}
           </form>
             {/* Label for email input with email type and placeholder text*/}
+            <form className="settings-form" onSubmit={(e) => e.preventDefault()}>
             <label htmlFor="email">Email:</label>
             <input
               type="email"
               id="email"
               name="email"
               placeholder="Change your email"
+              value={newEmail}
+                onChange={(e) => setNewEmail(e.target.value)}
+              required
             />
+            <button className="change-button" onClick={() => handleChangeEmail(newEmail)}>Change Email</button>
+            {emailError && <p className="error-message">{emailError}</p>}
+            </form>
+            
             {/* Title for the change password section */}
             <h3>Change Password</h3>
-            <label htmlFor="currentPassword">Current Password:</label>
-            {/* Label for current password input with type password and placeholder*/}
-            <input
-              type="password"
-              id="currentPassword"
-              name="currentPassword"
-              placeholder="Enter Current Password"
-            />
+            <form className="settings-form" onSubmit={(e) => e.preventDefault()}>
             <label htmlFor="newPassword">New Password:</label>
             {/* Label for new password input */}
             <input
@@ -156,19 +191,16 @@ const Settings = ({ user }) => {
               id="newPassword"
               name="newPassword"
               placeholder="Enter New Password"
-            />
-            {/* Label for confirming new password input type password and placeholder*/}
-            <label htmlFor="confirmNewPassword">Confirm New Password:</label>
-            <input
-              type="password"
-              id="confirmNewPassword"
-              name="confirmNewPassword"
-              placeholder="Confirm New Password"
+              value={newPassword}
+                onChange={(e) => setNewPassword(e.target.value)}
+              required
             />
             {/* Change Password Button */}
             <div className="settings-content">
-              <button className="change-button">Change Password</button>
+              <button className="change-button" onClick={() => handleChangePassword(newPassword)}>Change Password</button>
+              {passwordError && <p className="error-message">{passwordError}</p>}
             </div>{" "}
+            </form>
             {/* end of settings-content */}
           </div>{" "}
           {/* end of column */}
@@ -181,6 +213,7 @@ const Settings = ({ user }) => {
             {/* Delete Account */}
             <div className="settings-content">
             <DeleteConfirmation onDelete={handleDeleteAccount} />
+            {deleteAccError && <p className="error-message">{deleteAccError}</p>}
             </div>
             {/* end of settings-content */}
           </div>

@@ -17,8 +17,8 @@ import { changePageTitle } from "../components/Title";
 const Settings = ({ user }) => {
   // State for toggling the settings visibility
   const [showSettings, setShowSettings] = useState(true);
+  const [error] = useState(null);
   const [newDisplayName, setNewDisplayName] = useState("");
-  const [error] = useState("");
 
   changePageTitle("KS222-Settings");
 
@@ -31,6 +31,21 @@ const Settings = ({ user }) => {
   // Hide settings when not active
   if (!showSettings) return null;
 
+  // DELETE ACCOUNT
+  const handleDeleteAccount = async () => {
+    const auth = getAuth();
+    const user = auth.currentUser;
+
+    try {
+      if (user) {
+        await deleteUser(user);
+        console.log("User account deleted successfully");
+      } else {
+        console.error("No user signed in");
+      }
+    } catch (error) {
+      console.error("Error deleting user account:", error.message);
+    
   // Function to change the display name
   const changeDisplayName = async (newDisplayName) => {
     // Check if the user is logged in
@@ -125,7 +140,8 @@ const Settings = ({ user }) => {
         {/* end of close-button */}
         {/* Form for user settings */}
         <h2>Settings</h2>
-        <div className="settings-form">
+        <form className="settings-form">
+
           {/* Column container for settings */}
           <div className="column">
             {/* Subtitle for the account settings */}
@@ -212,6 +228,7 @@ const Settings = ({ user }) => {
             <h3>Danger Zone</h3>
             {/* Delete Account */}
             <div className="settings-content">
+            <button className="delete-account-button" onClick={handleDeleteAccount}>Delete Account</button>
               {/* <DeleteConfirmation onDelete={handleDeleteAccount} /> */}
             </div>
             {/* end of settings-content */}

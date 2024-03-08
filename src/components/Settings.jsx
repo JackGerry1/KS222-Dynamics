@@ -1,15 +1,26 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+// import DeleteConfirmation from "./DeleteConfirmationPopUp";
 import "../styles/Settings.css";
-import { getAuth, deleteUser } from "firebase/auth"; // for delete profile
-//import { getAuth, updateProfile } from "firebase/auth";
-//import { db } from "../firebase";
+import { getAuth, deleteUser, updateProfile } from "firebase/auth";
+import { db } from "../firebase";
+import {
+  doc,
+  deleteDoc,
+  setDoc,
+  collection,
+  getDocs,
+  updateDoc,
+} from "firebase/firestore";
+import { changePageTitle } from "../components/Title";
 
 const Settings = ({ user }) => {
   // State for toggling the settings visibility
   const [showSettings, setShowSettings] = useState(true);
-  //const [newDisplayName, setNewDisplayName] = useState("");
   const [error] = useState(null);
+  const [newDisplayName, setNewDisplayName] = useState("");
+
+  changePageTitle("KS222-Settings");
 
   // Function for handling the closing of the settings modal
   const handleSettingsClose = () => {
@@ -19,37 +30,6 @@ const Settings = ({ user }) => {
 
   // Hide settings when not active
   if (!showSettings) return null;
-
-  // Function to change the display name - WORKING PROGRESS
-  /*
-  const changeDisplayName = async (newDisplayName) => {
-    try {
-      // Check if the user is logged in
-      const user = getAuth().currentUser;
-  
-      if (user) {
-        // User is logged in, update display name
-        await updateProfile(user, {
-          displayName: newDisplayName
-        });
-  
-        // Update display name in Firestore
-        await db.collection("users").doc(user.uid).update({
-          displayName: newDisplayName
-        });
-  
-        console.log("Display name updated successfully");
-      } else {
-        // User is not logged in
-        console.error("No user signed in");
-        setError("No user signed in");
-      }
-    } catch (error) {
-      console.error("Error updating display name:", error);
-      setError(error.message);
-    }
-  };*/
-  
 
   // DELETE ACCOUNT
   const handleDeleteAccount = async () => {
@@ -65,6 +45,80 @@ const Settings = ({ user }) => {
       }
     } catch (error) {
       console.error("Error deleting user account:", error.message);
+    
+  // Function to change the display name
+  const changeDisplayName = async (newDisplayName) => {
+    // Check if the user is logged in
+    const auth = getAuth();
+    const user = auth.currentUser;
+
+    if (user) {
+      // Fetch user's email
+      const userEmail = user.email;
+
+      // Update user profile display name
+      await updateProfile(user, {
+        displayName: newDisplayName,
+      });
+      console.log("Updated user profile display name: " + user.displayName);
+
+      await setDoc(doc(db, "users", user.uid), {
+        uid: user.uid,
+        username: newDisplayName,
+        email: userEmail,
+      });
+      console.log("Created new user document in Firestore");
+
+      // Reference to the userChats collection
+      const userChatsRef = collection(db, "userChats");
+
+      // Get all documents in the userChats collection
+      const userChatsSnapshot = await getDocs(userChatsRef);
+
+      // Iterate through each document in the userChats collection
+      userChatsSnapshot.forEach(async (doc) => {
+        // Extract data from the document this is the uid of the userChat
+        const data = doc.data();
+
+        // Iterate through each key in the data object
+        Object.keys(data).forEach(async (key) => {
+          // Extract the nested object corresponding to the current key, which is the combinedId
+          const nestedObject = data[key];
+
+          // Check if the nested object is of type 'object' and if it can find the current users uid in any other records
+          // this is to make sure it updates the username info with the other users they are chatting with
+          if (
+            typeof nestedObject === "object" &&
+            user.uid === nestedObject.userInfo.uid
+          ) {
+            try {
+              // Update the userInfo nested object with new user display name and keep the same user uid
+
+              /*
+              so the below code will update a new userInfo fields so it looks like this
+              UjHXGwDoM7r4nvYyNpU5zqIi8b1E1xpoLWvbnKgfcAZJmYlF6Yf28FKs (combinedId):  
+                userInfo:
+                    uid: "UjHXGwDoM7r4nvYyNpU5zqIi8b1E" (string)
+                    username "bob" (string)
+              */
+
+              await updateDoc(
+                // Use doc.ref because doc is causing doc is not a function error
+                doc.ref,
+                {
+                  [key + ".userInfo"]: {
+                    uid: user.uid,
+                    username: newDisplayName,
+                  },
+                }
+              );
+              // catch any error
+            } catch (error) {
+              console.error("Error updating document:", error);
+            }
+          }
+        });
+      });
     }
   };
 
@@ -87,6 +141,7 @@ const Settings = ({ user }) => {
         {/* Form for user settings */}
         <h2>Settings</h2>
         <form className="settings-form">
+
           {/* Column container for settings */}
           <div className="column">
             {/* Subtitle for the account settings */}
@@ -106,20 +161,24 @@ const Settings = ({ user }) => {
             {/* end of column */}
             <label htmlFor="displayName">Display Name:</label>
             {/* Label for display name input with text type and placeholder text*/}
-            <input
-              type="text"
-              id="displayName"
-              name="displayName"
-              placeholder="Change your display name"
-              /*value={newDisplayName}
-              onChange={(e) => setNewDisplayName(e.target.value)}*/
-            />
-            
-            {/* Button to change display name */}
-            <button /*onClick={() => changeDisplayName(newDisplayName)}*/>
-              Change Display Name
-            </button>
-            {error && <p className="error-message">{error}</p>}
+            <form
+              className="settings-form"
+              onSubmit={(e) => e.preventDefault()}
+            >
+              <label htmlFor="newDisplayName">New Display Name:</label>
+              <input
+                type="text"
+                id="newDisplayName"
+                name="newDisplayName"
+                placeholder="Enter new display name"
+                value={newDisplayName}
+                onChange={(e) => setNewDisplayName(e.target.value)}
+              />
+              <button onClick={() => changeDisplayName(newDisplayName)}>
+                Change Display Name
+              </button>
+              {error && <p className="error-message">{error}</p>}
+            </form>
             {/* Label for email input with email type and placeholder text*/}
             <label htmlFor="email">Email:</label>
             <input
@@ -161,7 +220,7 @@ const Settings = ({ user }) => {
             {/* end of settings-content */}
           </div>{" "}
           {/* end of column */}
-        </form>{" "}
+        </div>{" "}
         {/* end of settings-form */}
         <form className="settings-form">
           <div className="column">
@@ -170,6 +229,7 @@ const Settings = ({ user }) => {
             {/* Delete Account */}
             <div className="settings-content">
             <button className="delete-account-button" onClick={handleDeleteAccount}>Delete Account</button>
+              {/* <DeleteConfirmation onDelete={handleDeleteAccount} /> */}
             </div>
             {/* end of settings-content */}
           </div>

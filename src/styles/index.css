@@ -190,3 +190,19 @@ form .txt-field {
     width: 50%;
   }
 }
+
+.errorMessage {
+  color: red;
+  font-weight: bold; 
+  display: flex;
+  justify-content: center; 
+  margin-top: -5px; 
+  margin-bottom: -30px; 
+}
+
+.buttoncontainer {
+  display: flex;
+  justify-content: center;
+  margin-top: 10px; 
+  margin-bottom: 10px;
+}

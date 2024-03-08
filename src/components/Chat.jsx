@@ -18,9 +18,9 @@ const Chat = () => {
       <div className="chatInfo">
         
         {data.user.username && (
-          <span>You are now chatting with {data.user.username}</span>
+          <span>You are now chatting with {data.user.uid}</span>
         )}
-      <DeleteVerification username={data.user.username} />
+      <DeleteVerification />
       </div>{" "}
       {/* end of chatInfo */}
       {/* Conditionally render Messages component if user data is available, otherwise show a message */}

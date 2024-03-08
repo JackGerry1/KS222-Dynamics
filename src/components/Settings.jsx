@@ -19,6 +19,7 @@ import {
   updateDoc,
 } from "firebase/firestore";
 import { changePageTitle } from "../components/Title";
+import ProfilePicture from "./ProfilePicture";
 
 const Settings = ({ user }) => {
   // State for toggling the settings visibility
@@ -196,21 +197,14 @@ const Settings = ({ user }) => {
           <div className="column">
             {/* Subtitle for the account settings */}
             <h3>Account Settings</h3>
-            <label htmlFor="profilePic">Profile Picture:</label>
-            {/* Label for profile picture input */}
-            <div className="profile-picture">
-              {/* Container for profile picture */}
-              <input
-                type="file"
-                id="profilePic"
-                name="profilePic"
-                accept="image/*"
-              />
-              {/* end of profile picture */}
-            </div>{" "}
+            <p>Configure your account preferences below.</p>
+            <h3>Profile Picture</h3>
+            {/* Label for Profile Picture and placeholder text*/}
+            <label for="profilePicture">Change Profile Picture: </label>
+            <ProfilePicture /> {/* Calling Profile Picture Component */}
             {/* end of column */}
-            <label htmlFor="displayName">Display Name:</label>
             {/* Label for display name input with text type and placeholder text*/}
+            <label htmlFor="displayName">Display Name:</label>
             <form
               className="settings-form"
               onSubmit={(e) => e.preventDefault()}

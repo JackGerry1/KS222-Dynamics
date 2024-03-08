@@ -111,7 +111,6 @@
 
 /* Styles for the user's image within the user chat entry */
 .chatpage .container .sidebar .userChat img {
-  background-color: red;
   width: 50px;
   height: 50px;
   border-radius: 50%;

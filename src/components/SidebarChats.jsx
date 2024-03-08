@@ -6,6 +6,8 @@ import { doc, onSnapshot } from "firebase/firestore";
 import { AuthContext } from "../context/AuthContext";
 import { ChatContext } from "../context/ChatContext";
 import { db } from "../firebase";
+import profileDefault from "../Assets/profileDefault.png";
+import { Link } from "react-router-dom";
 
 // Functional component for the SidebarChats
 const SidebarChats = () => {
@@ -47,10 +49,17 @@ const SidebarChats = () => {
         // userChat is displayed on the sidebar [0] represents the chatId [1] is where the content of the chat is 
         // so in this case the message
         <div className="userChat" key={sidebarChat[0]} onClick={() => handleSelect(sidebarChat[1].userInfo)}>
-          {/* tempory image to represent users profile picture if implemnted */}
-          <img src="" alt="" />
+          <img src={sidebarChat[1].userInfo?.photoURL} alt="" /> 
+          {/* TODO: above implement functionality for finding default image if the user has not provided a custom one */}
+          {/* Default image to represent users profile picture if implemnted */}
+          <Link to="/">
+          {/* Default Profile Image */}
+            {/* <img src={profileDefault} alt="Profile" className="Profile-Default" />  */}
+            
+          </Link>
           {/* retrieve the username and last message that has been sent by the users that you have had communication with */}
           <div className="userChatInfo">
+
             <span>{sidebarChat[1].userInfo?.username}</span>
             <p>{sidebarChat[1].lastMessage?.text}</p>
           </div> {/* end of userChatInfo*/}

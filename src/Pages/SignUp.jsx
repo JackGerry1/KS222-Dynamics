@@ -1,119 +1,107 @@
-// src/Pages/SignUp.js
-
-// Import relevent react and firebase dependices alongside the addUsername function from the db.js file
-// also imported the logo image
 import React, { useState } from "react";
 import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
-import { auth, db } from "../firebase";
+import { auth, db, storage } from "../firebase";
 import { doc, setDoc } from "firebase/firestore";
+import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import { useNavigate, Link } from "react-router-dom";
 import logoImage from "../Assets/Logo1.png";
+import defaultProfileImage from "../Assets/profileDefault.png"; // Import default profile picture
 import { changePageTitle } from "../components/Title";
+import { v4 as uuid } from "uuid";
 
-// Function to handle for signup page
 function SignUp() {
-  // State variables
   const [, setErr] = useState(false);
   const [, setLoading] = useState(false);
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isChecked, setIsChecked] = useState(false);
+  const [file, setFile] = useState(null); // State for file upload
   const navigate = useNavigate();
 
-  // Function to handle form submission
   const handleSubmit = async (e) => {
-    setLoading(true); // Set loading state to true
-    e.preventDefault(); // Prevent the default form submission behavior, which is refreshing page
+    setLoading(true);
+    e.preventDefault();
 
     try {
-      // Create user with provided email and password
       const res = await createUserWithEmailAndPassword(auth, email, password);
 
-      try {
-        // Update user profile with provided username
-        await updateProfile(res.user, {
-          displayName: username,
-          // photoURL: downloadURL, // Photo URL can be added if needed
-        });
+      let downloadURL = defaultProfileImage; // Default profile picture URL
 
-        // Create user document in firestore
-        await setDoc(doc(db, "users", res.user.uid), {
-          uid: res.user.uid,
-          username,
-          email,
-          // photoURL: downloadURL, // Photo URL can be added if needed
-        });
-
-        // Create empty user chats document in firestore
-        await setDoc(doc(db, "userChats", res.user.uid), {});
-
-        // Navigate to the sign-in page after successful signup
-        navigate("/signin");
-
-        // catch error when writing to database
-      } catch (err) {
-        console.log(err);
-        setErr(true); 
-        setLoading(false); 
+      // If a file is selected, upload the custom profile picture
+      if (file) {
+        const date = new Date().getTime();
+        const storageRef = ref(storage, `${uuid() + date}`);
+        await uploadBytesResumable(storageRef, file);
+        downloadURL = await getDownloadURL(storageRef);
       }
 
-      // catch errors with attempting to create an user account
+      await updateProfile(res.user, {
+        displayName: username,
+        photoURL: downloadURL,
+      });
+
+      await setDoc(doc(db, "users", res.user.uid), {
+        uid: res.user.uid,
+        username,
+        email,
+        photoURL: downloadURL,
+      });
+
+      await setDoc(doc(db, "userChats", res.user.uid), {});
+      navigate("/signin");
     } catch (err) {
-      setErr(true); 
-      setLoading(false); 
+      console.log(err);
+      setErr(true);
+      setLoading(false);
     }
   };
-  // Enable/disable the sign-up button based on form inputs and checkbox status
+
   const isSignUpDisabled = !isChecked || !email || !password || !username;
-  // Update page title
-  changePageTitle('KS222-SignUp');
+  changePageTitle("KS222-SignUp");
 
   return (
-    // Container div with a "center" class to center the content
     <div className="center">
-      {/* Link to the homepage */}
       <Link to="/">
-        {/* Image logo for the app */}
         <img src={logoImage} alt="Logo" className="sign-logo" />
       </Link>
-      {/* Title for the sign-up form */}
       <h1>Sign Up</h1>
-      {/* Sign-up form */}
       <form onSubmit={handleSubmit}>
-        {/* Input field for username */}
         <div className="txt-field">
           <input
             required
             type="text"
             placeholder="Username"
-            onChange={(e) => setUsername(e.target.value)} // Add onChange for username
+            onChange={(e) => setUsername(e.target.value)}
           />
           <label>Username</label>
         </div>
-        {/* Input field for email */}
         <div className="txt-field">
           <input
             required
-            type="text" // Fix type to "email"
+            type="text"
             placeholder="Email"
-            onChange={(e) => setEmail(e.target.value)} // Add onChange for email
+            onChange={(e) => setEmail(e.target.value)}
           />
-          {/* end of txt-field */}
           <label>Email</label>
         </div>
-        {/* Input field for password */}
         <div className="txt-field">
           <input
             required
             type="password"
             placeholder="Password"
-            onChange={(e) => setPassword(e.target.value)} // Add onChange for password
+            onChange={(e) => setPassword(e.target.value)}
           />
           <label>Password</label>
-        </div>{" "}
-        {/* end of txt-field */}
-        {/* Checkbox to agree to Terms of Service */}
+        </div>
+        <div className="txt-field">
+          <input
+            type="file"
+            id="profile-pic"
+            accept=".jpg, .jpeg, .png"
+            onChange={(e) => setFile(e.target.files[0])}
+          />
+        </div>
         <div className="signup-link">
           <label>
             <input
@@ -125,19 +113,14 @@ function SignUp() {
             I have read and agree to KS222 Dynamic Chat App's{" "}
             <Link to="/TOS">Terms of Service</Link>
           </label>
-        </div>{" "}
-        {/* end of signup-link */}
-        {/* Button for submitting the sign-up form */}
+        </div>
         <button disabled={isSignUpDisabled}>Sign up</button>
-        {/* Link to the sign-in page */}
         <div className="signup-link">
           Already have an account? <Link to="/signin">Sign In</Link>
-        </div>{" "}
-        {/* end of signup-link*/}
+        </div>
       </form>
-    </div> // end of center
+    </div>
   );
 }
 
-// Exporting the SignUp component as default
 export default SignUp;

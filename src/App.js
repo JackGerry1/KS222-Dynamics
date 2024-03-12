@@ -2,6 +2,7 @@
 
 // import the relevent react dependices alongside all of the page components
 import React, { useContext } from "react";
+import useLocalStorage from "use-local-storage";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { AuthContext } from "./context/AuthContext";
 import "./styles/index.css";
@@ -11,6 +12,7 @@ import Home from "./Pages/Home";
 import Chatpage from "./Pages/Chatpage";
 import TOS from "./Pages/TOS";
 import Settings from "./components/Settings";
+import Toggle from "./components/Toggle";
 
 function App() {
   // create a unautorised user to start with
@@ -25,9 +27,13 @@ function App() {
     return children;
   };
 
+  const preference = window.matchMedia("(prefers-color-scheme: dark)").matches;
+  const [isDark, setIsDark] = useLocalStorage("isDark", preference);
+
   return (
     <BrowserRouter>
-      <div className="App">
+      <div className="App" data-theme={isDark ? "dark" : "light"}>
+        <Toggle isChecked={isDark} handleChange={() => setIsDark(!isDark)} />
         <Routes>
           {/* Default route leads to Home */}
           <Route path="/" element={<Home />} />
@@ -60,7 +66,7 @@ function App() {
               </ProtectedRoute>
             }
           />
-        </Routes> 
+        </Routes>
       </div>
     </BrowserRouter>
   );

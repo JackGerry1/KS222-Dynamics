@@ -2,9 +2,9 @@
 
 // Import necessary Firebase methods from the Firebase SDK
 import { initializeApp } from "firebase/app";
-import { getAuth, updateProfile } from "firebase/auth";
-import { getFirestore, updateDoc } from "firebase/firestore";
-import { getDownloadURL, getStorage, ref, uploadBytes } from "firebase/storage";
+import { getAuth } from "firebase/auth";
+import { getFirestore } from "firebase/firestore";
+import { getStorage } from "firebase/storage";
 
 // Firebase configuration obtained from environment variables for security
 const firebaseConfig = {
@@ -26,22 +26,7 @@ const auth = getAuth(app);
 // Get the Firestore database instance using the initialized app
 const db = getFirestore(app);
 
-// Get the Storage instance using the initialized app
 const storage = getStorage();
 
-// Export authentication and Firestore database instances for usage in other modules
-export { auth, db };
-
-export async function upload(file, currentUser, setLoading){
-  const fileRef = ref(storage, currentUser.uid + '.png');
-
-  setLoading(true);
-
-  const snapshot = await uploadBytes(fileRef, file);
-  const photoURL = await getDownloadURL(fileRef);
-
-  updateProfile(currentUser, {photoURL});
-
-  setLoading(false);
-  alert("Uploaded file!")
-}
+// Export authentication, storage and Firestore database instances for usage in other modules
+export { auth, db, storage };

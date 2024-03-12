@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
-import { Button, Modal } from 'react-bootstrap';
-import '../styles/DeleteConfirmation.css'; 
+import React, { useState } from "react";
+import { Button, Modal } from "react-bootstrap";
+import "../styles/DeleteConfirmation.css";
+import "../styles/Settings.css";
 
 const DeleteConfirmation = ({ onDelete }) => {
   const [show, setShow] = useState(false);
@@ -14,7 +15,11 @@ const DeleteConfirmation = ({ onDelete }) => {
 
   return (
     <>
-      <Button variant="danger" onClick={handleShow} className="delete-account-button">
+      <Button
+        variant="danger"
+        onClick={handleShow}
+        className="delete-account-button"
+      >
         Delete Account
       </Button>
 
@@ -22,12 +27,22 @@ const DeleteConfirmation = ({ onDelete }) => {
         <Modal.Header closeButton={false}>
           <Modal.Title className="modal-title">Delete Account</Modal.Title>
         </Modal.Header>
-        <Modal.Body className="modal-body">Are you sure you want to delete your account?</Modal.Body>
+        <Modal.Body className="modal-body">
+          Are you sure you want to delete your account?
+        </Modal.Body>
         <Modal.Footer>
-          <Button variant="danger" onClick={handleDelete} className="delete-button">
+          <Button
+            variant="danger"
+            onClick={handleDelete}
+            className="delete-button"
+          >
             Delete
           </Button>
-          <Button variant="secondary" onClick={handleClose} className="cancel-button">
+          <Button
+            variant="secondary"
+            onClick={handleClose}
+            className="cancel-button"
+          >
             Cancel
           </Button>
         </Modal.Footer>

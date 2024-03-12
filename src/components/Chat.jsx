@@ -3,7 +3,7 @@ import React, { useContext } from "react";
 import Messages from "./Messages";
 import Input from "./Input";
 import { ChatContext } from "../context/ChatContext";
-import DeleteVerification from './DeleteVerification';
+import DeleteVerification from "./DeleteVerification";
 
 // Functional component for the main chat interface
 const Chat = () => {
@@ -16,11 +16,10 @@ const Chat = () => {
     <div className="chat">
       {/* Display information about the current chat else dont display anything */}
       <div className="chatInfo">
-        
         {data.user.username && (
-          <span>You are now chatting with {data.user.uid}</span>
+          <span>You are now chatting with {data.user.username}</span>
         )}
-      <DeleteVerification />
+        <DeleteVerification />
       </div>{" "}
       {/* end of chatInfo */}
       {/* Conditionally render Messages component if user data is available, otherwise show a message */}

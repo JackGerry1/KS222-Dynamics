@@ -1,29 +1,29 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect, useContext } from "react";
 import { db } from "../firebase";
-import { collection, query, where, getDocs } from 'firebase/firestore';
+import { collection, query, where, getDocs } from "firebase/firestore";
 import { ChatContext } from "../context/ChatContext";
-
-
 
 const DeleteVerification = () => {
   const { data } = useContext(ChatContext);
-  // console.log('UID:', data.user.uid);
   const [userExists, setUserExists] = useState(null);
 
   useEffect(() => {
     const checkUserExists = async () => {
       try {
-        const usersRef = collection(db, 'users');
-        const q = query(usersRef, where('uid', '==', data.user.uid));
-        const querySnapshot = await getDocs(q);
-        setUserExists(!querySnapshot.empty);
+        // Check if data.user and data.user.uid are defined
+        if (data.user && data.user.uid) {
+          const usersRef = collection(db, "users");
+          const q = query(usersRef, where("uid", "==", data.user.uid));
+          const querySnapshot = await getDocs(q);
+          setUserExists(!querySnapshot.empty);
+        }
       } catch (error) {
-        console.error('Error checking user existence:', error);
+        console.error("Error checking user existence:", error);
       }
     };
 
     checkUserExists();
-  }, [data.user.uid]);
+  }, [data.user]); // Update the effect when data.user changes
 
   return (
     <div>
@@ -34,4 +34,3 @@ const DeleteVerification = () => {
 };
 
 export default DeleteVerification;
-

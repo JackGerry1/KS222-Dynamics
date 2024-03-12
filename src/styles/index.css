@@ -11,6 +11,46 @@
   font-family: "Poppins", sans-serif;
 }
 
+:root {
+  --center-bg: white;
+  --center-h1-text: black;
+  --txt-field-label: #adadad;
+  --txt-field-input: black;
+  --signup-link: #666666;
+  --tos-bg: #f9f9f9;
+  --terms-text: black;
+  --settings-bg: white;
+  --settings-txt: black;
+  --close-button: black;
+  --close-button-hover: #c9c3c3;
+  --chatpage-container-bg: #ddddf7;
+  --sender-info: black;
+  --received-message-bg: white;
+  --received-message-text: black;
+  --chatpage-input-bg: white;
+  --chatpage-input-text: black;
+}
+
+[data-theme="dark"] {
+  --center-bg: #1e1e1e;
+  --center-h1-text: #ffffff;
+  --txt-field-label: #aaaaaa;
+  --txt-field-input: #ffffff;
+  --signup-link: #999999;
+  --tos-bg: #333333;
+  --terms-text: #ffffff;
+  --settings-bg: #1e1e1e;
+  --settings-txt: #ffffff;
+  --close-button: #ffffff;
+  --close-button-hover: #aaaaaa;
+  --chatpage-container-bg: #252525;
+  --sender-info: #ffffff;
+  --received-message-bg: #333333;
+  --received-message-text: #ffffff;
+  --chatpage-input-bg: #333333;
+  --chatpage-input-text: #ffffff;
+}
+
 /* Styling for the body element */
 body {
   margin: 0;
@@ -30,7 +70,7 @@ body {
   left: 50%; /* Center horizontally */
   transform: translate(-50%, -50%); /* Center the element */
   width: 400px;
-  background: white;
+  background: var(--center-bg);
   border-radius: 10px;
   box-shadow: 10px 10px 15px rgba(0, 0, 0, 0.05); /* Box shadow for a slight elevation */
 }
@@ -40,6 +80,7 @@ body {
   text-align: center;
   padding: 20px 0;
   border-bottom: 1px solid silver;
+  color: var(--center-h1-text);
 }
 
 /* Styling for the form inside .center */
@@ -64,6 +105,7 @@ form .txt-field {
   border: none;
   background: none;
   outline: none; /* Remove default focus outline */
+  color: var(--txt-field-input);
 }
 
 /* Styling for the label inside .txt-field */
@@ -71,7 +113,7 @@ form .txt-field {
   position: absolute;
   top: 50%; /* Position label in the middle */
   left: 5px; /* Left offset for label */
-  color: #adadad;
+  color: var(--txt-field-label);
   transform: translateY(-50%); /* Center label vertically */
   font-size: 16px;
   pointer-events: none; /* Disable pointer events for label */
@@ -118,7 +160,7 @@ form .txt-field {
   margin: 30px 0;
   text-align: center;
   font-size: 16px;
-  color: #666666;
+  color: var(--signup-link);
 }
 
 /* Styling for the anchor tag inside .signup-link */
@@ -193,16 +235,16 @@ form .txt-field {
 
 .errorMessage {
   color: red;
-  font-weight: bold; 
+  font-weight: bold;
   display: flex;
-  justify-content: center; 
-  margin-top: -5px; 
-  margin-bottom: -30px; 
+  justify-content: center;
+  margin-top: -5px;
+  margin-bottom: -30px;
 }
 
 .buttoncontainer {
   display: flex;
   justify-content: center;
-  margin-top: 10px; 
+  margin-top: 10px;
   margin-bottom: 10px;
 }

@@ -89,6 +89,10 @@ body {
   box-sizing: border-box;
 }
 
+.center p {
+  color: var(--center-h1-text);
+}
+
 /* Styling for the input fields inside .txt-field */
 form .txt-field {
   position: relative;

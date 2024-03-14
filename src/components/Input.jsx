@@ -94,7 +94,6 @@ const Input = () => {
         onChange={(e) => setText(e.target.value)}
         onKeyDown={handleKeyPress}
         value={text}
-        disabled
       />
       {/* Send button with associated image */}
       <div className="send">

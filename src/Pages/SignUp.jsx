@@ -101,6 +101,9 @@ function SignUp() {
             accept=".jpg, .jpeg, .png"
             onChange={(e) => setFile(e.target.files[0])}
           />
+          <p>
+            If no picture is uploaded, a default profile picture will be used.
+          </p>
         </div>
         <div className="signup-link">
           <label>

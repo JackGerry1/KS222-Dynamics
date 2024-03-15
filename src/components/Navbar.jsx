@@ -34,14 +34,13 @@ const Navbar = () => {
     <div className="navbar">
       {/* Application logo */}
       <span className="logo">Dynamic Chat App</span>
-
       {/* User section with display name, profile picture, and logout button */}
       <div className="user">
         {/* OPTIONAL TODO: user profile picture displayed here, something like {currentUser.profilePic} */}
-        <img src={currentUser.photoURL} alt="Avatar" className="avatar"/>
+        <span style={{ marginTop: "5px" }}>{currentUser?.displayName}</span>
+        <img src={currentUser?.photoURL} alt="" />
 
         {/* Display the user's name */}
-        <span style={{ marginTop: "5px" }}>{currentUser.displayName}</span>
 
         {/* Logout button with logout icon */}
         <img
@@ -50,7 +49,8 @@ const Navbar = () => {
           className="settings-logo"
           onClick={handleLogout}
         />
-      </div> {/* end of user */}
+      </div>{" "}
+      {/* end of user */}
     </div> // end of navbar container
   );
 };

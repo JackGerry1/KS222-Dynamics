@@ -46,11 +46,11 @@ function SignIn() {
 
       // Attempt sign-in using Firebase auth with provided email and password
       await signInWithEmailAndPassword(auth, email, password);
-      
+
       // Log user data to the console
       const currentUser = auth.currentUser;
       console.log("Logged-in User Data:", currentUser);
-      
+
       // If successful, navigate to the chat page or any other desired location
       navigate("/chatpage");
     } catch (error) {
@@ -76,7 +76,7 @@ function SignIn() {
       const result = await signInWithPopup(auth, googleProvider);
       const user = result.user;
 
-      // create variables to check the current state of the userChats 
+      // create variables to check the current state of the userChats
       // for the Gmail user signing in
       const userChatsDocRef = doc(db, "userChats", user.uid);
       const userChatsDocSnapshot = await getDoc(userChatsDocRef);
@@ -89,6 +89,7 @@ function SignIn() {
           uid: user.uid,
           username: user.displayName,
           email: user.email,
+          photoURL: user.photoURL,
         });
 
         // Create empty userChats document in Firestore
@@ -109,7 +110,7 @@ function SignIn() {
     setReCAPTCHAToken(token);
   };
   // Update page title
-  changePageTitle('KS222-SignIn');
+  changePageTitle("KS222-SignIn");
 
   return (
     <div className="center">
@@ -156,18 +157,18 @@ function SignIn() {
         <div className="buttoncontainer">
           <GoogleButton onClick={handleGoogleSignIn}>
             Sign In with Google
-            </GoogleButton>
+          </GoogleButton>
         </div>
         {/* ReCAPTCHA entry box */}
         <div className="buttoncontainer">
-        <ReCAPTCHA
-          sitekey="6Le1HzYfAAAAAP9SdeuzJ7GDta-hWegd8lpABac1"
-          onChange={handleReCAPTCHAChange}
-        />
+          <ReCAPTCHA
+            sitekey="6Le1HzYfAAAAAP9SdeuzJ7GDta-hWegd8lpABac1"
+            onChange={handleReCAPTCHAChange}
+          />
         </div>
         {/* Error message displayed if ReCAPTCHA not completed or incorrect credentials entered*/}
         <div className="errorMessage">
-        {errorMessage && <p>{errorMessage}</p>}
+          {errorMessage && <p>{errorMessage}</p>}
         </div>
         {/* Link to the signup page */}
         <div className="signup-link">
